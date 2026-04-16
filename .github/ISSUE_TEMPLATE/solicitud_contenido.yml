@@ -6,9 +6,9 @@ body:
   - type: "textarea"
     id: "archivo"
     attributes:
-      label: "Archivo .tex"
+      label: "Archivo .tex o .ino"
       description: |
-        ¿A cual archivo .tex deseas sugerir contenido?
+        ¿A cual archivo .tex o .ino deseas sugerir contenido?
     validations:
       required: true
 
@@ -37,11 +37,11 @@ body:
       description: |
         Esto es solo para solicitudes, si quieres reportar un error, abre un issue con el template 'error-compilacion'
       options:
-        - label: "Confirmo que la solicitud de integración cumple con el IEEE"
+        - label: "Confirmo que la solicitud de integración cumple con el IEEE en caso de ser un .tex o con el linter de Arduino IDE en caso de ser un .ino"
           required: true
         - label: "Confirmo que compila correctamente y no rompe la estructura del archivo"
           required: true
-        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity."
+        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity, o que en caso de Arduino usé el IDE oficial."
           required: true
         - label: "Confirmo que fui claro en el número de líneas y no puse algo que no es un número de línea."
           required: true
