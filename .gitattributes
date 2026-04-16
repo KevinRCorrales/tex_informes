@@ -1,0 +1,18 @@
+# 1. Forzar que todos los archivos de texto usen LF (estándar Linux)
+# Esto corrige automáticamente los CRLF de Windows al hacer commit
+* text=auto eol=lf
+
+# 2. Asegurar que los archivos de LaTeX se traten como texto y usen LF
+*.tex text eol=lf
+*.bib text eol=lf
+*.sty text eol=lf
+*.cls text eol=lf
+
+# 3. Evitar que Git intente "corregir" archivos binarios (imágenes del informe)
+*.pdf binary
+*.jpg binary
+*.png binary
+*.jpeg binary
+
+# 4. Archivos de configuración de VSCode
+*.json text eol=lf

@@ -1,6 +1,6 @@
 \documentclass[conference]{IEEEtran}
-\usepackage[utf8]{inputenc} % Codificación para tildes
-\usepackage[spanish]{babel} % idioma
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
 \IEEEoverridecommandlockouts
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -27,5 +27,24 @@
 }
 
 \maketitle
-texto
+
+\begin{abstract}
+En este proyecto se desarrolló una estación de confort para mejorar las condiciones 
+de un puesto de estudio o trabajo. El sistema permite medir la temperatura y el nivel de 
+iluminación del entorno, mostrando los datos en una pantalla LCD I2C. Además, el sistema 
+toma decisiones automáticas como activar ventilación mediante un motor DC y regular la 
+iluminación utilizando PWM. Se implementaron modos de operación manual y automático, 
+junto con técnicas como antirrebote y temporización con millis().
+\end{abstract}
+
+\begin{IEEEkeywords}
+Digital, antirrebote, estados, analógico, PWM, DS18B20, actuador con transistor, LCD I2C, millis()
+\end{IEEEkeywords}
+
+\section{Introducción}
+Actualmente, las condiciones ambientales influyen directamente en el rendimiento académico y laboral. 
+Factores como la temperatura y la iluminación pueden afectar la concentración y la productividad. 
+Por ello, en este proyecto se propone el diseño de un sistema automatizado que supervise y mejore dichas 
+condiciones en un puesto de estudio.
+
 \end{document}
