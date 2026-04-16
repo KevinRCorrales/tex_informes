@@ -31,6 +31,11 @@ bool estadoManualSalida = false;
 // Antirrebote 
 bool estadoAnteriorModo = HIGH;
 bool estadoAnteriorAccion = HIGH;
+bool estadoBotonModo = HIGH;
+bool estadoBotonAccion = HIGH;
+unsigned long ultimoTiempoModo = 0;
+unsigned long ultimoTiempoAccion = 0;
+const unsigned long debounceDelay = 200;
 
 // Tiempo
 unsigned long ultimoTiempoLectura = 0;
@@ -54,13 +59,33 @@ void loop() {
   bool lecturaModo = digitalRead(PIN_BOTON_MANUAL);
   bool lecturaAccion = digitalRead(PIN_BOTON_AUTO);
 
-  if (lecturaModo == LOW && estadoAnteriorModo == HIGH) {
-    sistemaManual = !sistemaManual;
+  // Antirrebote botón modo
+  if (lecturaModo != estadoAnteriorModo) {
+    ultimoTiempoModo = millis();
+  }
+
+  if ((millis() - ultimoTiempoModo) > debounceDelay) {
+    if (lecturaModo != estadoBotonModo) {
+      estadoBotonModo = lecturaModo;
+      if (estadoBotonModo == LOW) {
+        sistemaManual = !sistemaManual;
+      }
+    }
   }
   estadoAnteriorModo = lecturaModo;
 
-  if (lecturaAccion == LOW && estadoAnteriorAccion == HIGH) {
-    estadoManualSalida = !estadoManualSalida;
+  // Antirrebote botón acción
+  if (lecturaAccion != estadoAnteriorAccion) {
+    ultimoTiempoAccion = millis();
+  }
+
+  if ((millis() - ultimoTiempoAccion) > debounceDelay) {
+    if (lecturaAccion != estadoBotonAccion) {
+      estadoBotonAccion = lecturaAccion;
+      if (estadoBotonAccion == LOW) {
+        estadoManualSalida = !estadoManualSalida;
+      }
+    }
   }
   estadoAnteriorAccion = lecturaAccion;
 
