@@ -6,7 +6,7 @@ body:
   - type: "textarea"
     id: "archivo"
     attributes:
-      label: "Archivo .tex"
+      label: "Archivo .tex o .ino"
       description: |
         ¿Qué archivo estás intentando compilar?
     validations:
@@ -16,7 +16,7 @@ body:
     attributes:
       label: ¿Qué sistema operativo estás usando?
       description: |
-        Necesario para saber la codificación del sistema
+        Necesario para saber la codificación del sistema y el estado de los drivers
       options:
         - label: "Windows 10"
         - label: "Windows 11"
@@ -27,7 +27,7 @@ body:
     id: "description"
     attributes:
       label: "Error obtenido"
-      description: "Copia y pega el output del compilador de TeX/LaTeX"
+      description: "Copia y pega el output del compilador de TeX/LaTeX o de Arduino"
     validations:
       required: true
 
@@ -42,5 +42,5 @@ body:
           required: true
         - label: "Confirmo que intenté solucionar usando la terminal y no funcionó."
           required: true
-        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity."
+        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity o el IDE oficial de Arduino."
           required: true
