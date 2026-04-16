@@ -1,0 +1,47 @@
+name: "Integrar contenido"
+description: "Solicitud para integrar contenido a un archivo .tex"
+title: "Solicitud: "
+labels: ["type::request"]
+body:
+  - type: "textarea"
+    id: "archivo"
+    attributes:
+      label: "Archivo .tex"
+      description: |
+        ¿A cual archivo .tex deseas sugerir contenido?
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "linea"
+    attributes:
+      label: "Número de linea"
+      description: |
+        ¿En qué linea(s) debe(n) ser ubicado(s) tu(s) texto(s)?
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "contenido"
+    attributes:
+      label: "Contenido a integrar"
+      description: "Copia y pega el contenido a integrar"
+      render: latex
+    validations:
+      required: true
+
+  - type: "checkboxes"
+    id: "sanity-check"
+    attributes:
+      label: "Confirmo que el issue NO ESTA REPETIDO"
+      description: |
+        Esto es solo para solicitudes, si quieres reportar un error, abre un issue con el template 'error-compilacion'
+      options:
+        - label: "Confirmo que la solicitud de integración cumple con el IEEE"
+          required: true
+        - label: "Confirmo que compila correctamente y no rompe la estructura del archivo"
+          required: true
+        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity."
+          required: true
+        - label: "Confirmo que fui claro en el número de líneas y no puse algo que no es un número de línea."
+          required: true

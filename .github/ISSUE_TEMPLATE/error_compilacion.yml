@@ -1,0 +1,46 @@
+name: "Error compilación"
+description: "Error al compilar un .tex"
+title: "Error: "
+labels: ["type::bug"]
+body:
+  - type: "textarea"
+    id: "archivo"
+    attributes:
+      label: "Archivo .tex"
+      description: |
+        ¿Qué archivo estás intentando compilar?
+    validations:
+      required: true
+
+  - type: "dropdown"
+    attributes:
+      label: ¿Qué sistema operativo estás usando?
+      description: |
+        Necesario para saber la codificación del sistema
+      options:
+        - label: "Windows 10"
+        - label: "Windows 11"
+        - label: "GitHub Codespaces o GNU/Linux"
+        - label: "MacOS"
+
+  - type: "textarea"
+    id: "description"
+    attributes:
+      label: "Error obtenido"
+      description: "Copia y pega el output del compilador de TeX/LaTeX"
+    validations:
+      required: true
+
+  - type: "checkboxes"
+    id: "sanity-check"
+    attributes:
+      label: "Confirmo que el issue NO ESTA REPETIDO"
+      description: |
+        Esto es solo para errores, si vas a proponer algo para los documentos, abre un issue con el template 'solicitud-contenido'
+      options:
+        - label: "Confirmo que ya le pedí a la IA una solución y no funcionó."
+          required: true
+        - label: "Confirmo que intenté solucionar usando la terminal y no funcionó."
+          required: true
+        - label: "Confirmo que estoy usando un editor estandar como VSCode o derivados como VSCodium o Antigravity."
+          required: true
