@@ -26,7 +26,6 @@ body:
     attributes:
       label: "Contenido a integrar"
       description: "Copia y pega el contenido a integrar"
-      render: latex
     validations:
       required: true
 
