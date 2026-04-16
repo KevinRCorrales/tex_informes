@@ -4,8 +4,8 @@ Grupo 1: Estación de confort para puesto de estudio
 
 
 // Librerías necesarias para el sensor y el LCD
-#include <OneWire.h> // Protocolo de comunicación del sensor
-#include <DallasTemperature.h> // Lectura y consulta de temperaturas
+#include <OneWire.h>            // Protocolo de comunicación del sensor
+#include <DallasTemperature.h>  // Lectura y consulta de temperaturas
 // LCD
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -24,7 +24,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // Variables de estado
 float temperaturaActual = 0.0;
- 
+
 // Variable para saber si el sistema está en automatico o en manual
 bool sistemaManual = false;
 
@@ -48,4 +48,13 @@ void setup() {
 
 void loop() {
   int lectura = analogRead(pwm);
+  temperaturaActual = sensor.getTempCByIndex(0);
+  if (millis() - ultimoTiempoLectura >= intervaloLectura) {
+    ultimoTiempoLectura = millis();
+    sensor.requestTemperatures();
+    lcd.setCursor(0, 0);
+    lcd.print("Temp: ");
+    lcd.print(temperaturaActual);
+    lcd.print(" C");
+  }
 }
