@@ -17,7 +17,8 @@ Esto es por si no sabes hacer un Pull Request en GitHub:
 Usando una terminal, clona el repositorio y entra al directorio:
 
 ```
-git clone https://github.com/KevinRCorrales/tex_informes.git && cd tex_informes
+git clone https://github.com/KevinRCorrales/tex_informes.git
+cd tex_informes
 ```
 
 Realiza tus cambios en un editor basado en VSCode y cuando los tengas listos ejecuta:
@@ -39,5 +40,6 @@ Si no planeas enviarlo a mi correo copia la salida de ese comando y pegala en el
 cuando se incorporen tus cambios, sincroniza tu copia local:
 
 ```
-git restore . && git pull
+git restore .
+git pull
 ```
