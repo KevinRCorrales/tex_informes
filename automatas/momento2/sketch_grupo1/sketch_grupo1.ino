@@ -54,6 +54,7 @@ void setup() {
 }
 
 void loop() {
+  unsigned long tiempoActual = millis();
 
   // -------- BOTONES --------
   bool lecturaModo = digitalRead(PIN_BOTON_MANUAL);
@@ -61,10 +62,10 @@ void loop() {
 
   // Antirrebote botón modo
   if (lecturaModo != estadoAnteriorModo) {
-    ultimoTiempoModo = millis();
+    ultimoTiempoModo = tiempoActual;
   }
 
-  if ((millis() - ultimoTiempoModo) > debounceDelay) {
+  if ((tiempoActual - ultimoTiempoModo) > debounceDelay) {
     if (lecturaModo != estadoBotonModo) {
       estadoBotonModo = lecturaModo;
       if (estadoBotonModo == LOW) {
@@ -76,10 +77,10 @@ void loop() {
 
   // Antirrebote botón acción
   if (lecturaAccion != estadoAnteriorAccion) {
-    ultimoTiempoAccion = millis();
+    ultimoTiempoAccion = tiempoActual;
   }
 
-  if ((millis() - ultimoTiempoAccion) > debounceDelay) {
+  if ((tiempoActual - ultimoTiempoAccion) > debounceDelay) {
     if (lecturaAccion != estadoBotonAccion) {
       estadoBotonAccion = lecturaAccion;
       if (estadoBotonAccion == LOW) {
