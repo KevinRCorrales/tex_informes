@@ -47,4 +47,67 @@ Factores como la temperatura y la iluminación pueden afectar la concentración 
 Por ello, en este proyecto se propone el diseño de un sistema automatizado que supervise y mejore dichas 
 condiciones en un puesto de estudio.
 
+\section{Objetivos}
+\subsection{Objetivo General}
+Diseñar una estación de confort que supervise y mejore las condiciones de temperatura e iluminación 
+en un puesto de estudio, utilizando sensores y actuadores controlados por un microcontrolador.
+\subsection{Objetivos Específicos}
+\begin{itemize}
+    \item Medir la temperatura ambiente utilizando un sensor DS18B20.
+    \item Medir el nivel de iluminación con un sensor LDR.
+    \item Mostrar los datos en una pantalla LCD I2C.
+    \item Implementar un sistema de control automático y manual del sistema.
+    \item Controlar ventilación mediante un motor DC.
+    \item Regular la iluminación utilizando PWM.
+\end{itemize}
+
+\section{Metodología}
+Para el desarrollo del proyecto se trabajó en equipo dividiendo tareas como programación, 
+montaje del circuito y documentación. Se utilizó una placa Arduino como microcontrolador principal, 
+junto con sensores y actuadores.
+Primero se realizó el diseño del circuito en protoboard, conectando el sensor de temperatura DS18B20, 
+la LDR para medición de luz, la pantalla LCD I2C, un motor DC y un LED para simular la iluminación.
+Luego se desarrolló el código en Arduino IDE, implementando lectura de sensores, control 
+de actuadores y visualización de datos. Se utilizó la función millis() para evitar retrasos con 
+delay() y mejorar el funcionamiento del sistema.
+
+\section{Diseño del Sistema}
+\subsection{Diagrama de Funcionamiento}
+El sistema funciona a partir de la lectura constante de los sensores. Dependiendo de los valores 
+obtenidos, el sistema toma decisiones automáticamente o permite control manual.
+\subsection{Condiciones de Operación}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Condición & Acción & Modo \\
+\hline
+Temp $>$ 28°C & Activar ventilación & Automático \\
+\hline
+Temp $\leq$ 28°C & Desactivar ventilación & Automático \\
+\hline
+Luz baja $<$ 300 & Aumentar iluminación & Automático \\
+\hline
+Luz alta $\geq$ 300 & Disminuir iluminación & Automático \\
+\hline
+Botón Manual & Cambiar modo & Manual \\
+\hline
+\end{tabular}
+\caption{Condiciones de operación del sistema}
+\end{table}
+
+\section{Desarrollo}
+\subsection{Lectura de sensores}
+El sensor DS18B20 se utilizó para medir la temperatura con buena precisión. Este sensor trabaja
+de forma digital, lo que facilita su lectura. Por otro lado la LDR entrega valores analógicos
+que dependen de la cantidad de luz recibida.
+\subsection{Visualización en el LCD}
+Se utilizó una pantalla LCD con comunicación I2C para mostrar:
+\begin{itemize}
+    \item Temperatura actual en °C.
+    \item Nivel de iluminación.
+    \item Modo de operación (Automático o Manual).
+\end{itemize}
+Esto permite al usuario entender fácilmente el estado del sistema.
+
 \end{document}
