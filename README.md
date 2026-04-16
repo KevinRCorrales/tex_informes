@@ -10,6 +10,8 @@ Para reportar errores de compilación usa: [Issue para errores (bugs)](https://g
 
 Repositorio donde almaceno informes en TeX/LaTeX con código versionado para una colaboración más productiva con mis compañeros.
 
+Todo informe se basará en la plantilla: [plantilla](IEEE-conference-template-062824.tex)
+
 ## Obtener el código fuente y proponer cambios
 
 Esto es por si no sabes hacer un Pull Request en GitHub:
