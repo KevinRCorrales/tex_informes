@@ -27,15 +27,7 @@ Realiza tus cambios en un editor basado en VSCode y cuando los tengas listos eje
 git diff
 ```
 
-Si es posible ejecuta:
-
-```
-git diff > mod.diff
-```
-
-y envia el archivo mod.diff a mi correo: kevin.ramirezcorr@campusucc.edu.co
-
-Si no planeas enviarlo a mi correo copia la salida de ese comando y pegala en el issue enlazado más arriba.
+Copia la salida de ese comando y pegala en el issue enlazado más arriba.
 
 Cuando se incorporen tus cambios, sincroniza tu copia local:
 
