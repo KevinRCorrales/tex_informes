@@ -68,8 +68,8 @@ junto con sensores y actuadores.
 Primero se realizó el diseño del circuito en protoboard, conectando el sensor de temperatura DS18B20, 
 la LDR para medición de luz, la pantalla LCD I2C, un motor DC y un LED para simular la iluminación.
 Luego se desarrolló el código en Arduino IDE, implementando lectura de sensores, control 
-de actuadores y visualización de datos. Se utilizó la función millis() para evitar retrasos con 
-delay() y mejorar el funcionamiento del sistema.
+de actuadores y visualización de datos. Se utilizó la función millis() para evitar la congelación del 
+sistema con delay() y mejorar la fluidez.
 
 \section{Diseño del Sistema}
 \subsection{Diagrama de Funcionamiento}
@@ -109,5 +109,16 @@ Se utilizó una pantalla LCD con comunicación I2C para mostrar:
     \item Modo de operación (Automático o Manual).
 \end{itemize}
 Esto permite al usuario entender fácilmente el estado del sistema.
+
+\section{Decisiones técnicas}
+\begin{itemize}
+    \item Se usó una resistencia de 220 ohmios para el led, así aprovechamos todo su brillo sin quemarlo.
+    \item Se usó una resistencia de 4.7 kOhms para el sensor ya que esta evita lecturas incorrectas del 
+sensor hacia el Arduino.
+    \item Usamos millis() y evitamos el uso de delay() para el antirrebote y que el sistema pudiera
+seguir trabajando en los sensores y que no se detuviera mientras verifica las pulsaciones.
+    \item Los botones se configuraron como INPUT\_PULLUP para evitar el uso de resistencias externas en el montaje.
+    \item Usamos un LCD I2C para aprovechar una conexión con menos cables y así tener más espacio para otros componentes.
+\end{itemize}
 
 \end{document}
