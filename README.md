@@ -35,11 +35,21 @@ git diff > mod.diff
 
 y envia el archivo mod.diff a mi correo: kevin.ramirezcorr@campusucc.edu.co
 
-Si no planeas enviarlo a mi correo copia la salida de ese comando y pegala en el issue enlazado más arriba
+Si no planeas enviarlo a mi correo copia la salida de ese comando y pegala en el issue enlazado más arriba.
 
-cuando se incorporen tus cambios, sincroniza tu copia local:
+Cuando se incorporen tus cambios, sincroniza tu copia local:
 
 ```
 git restore .
 git pull
 ```
+
+## Probar cambios
+
+Comprueba que tus cambios compilan usando TeXLive que es el más ideal para un entorno completo:
+
+```
+pdflatex <ruta al archivo .tex>
+```
+
+Abre el PDF en tu visor preferido y verifica.
