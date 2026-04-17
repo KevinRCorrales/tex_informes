@@ -69,6 +69,52 @@ Se analiza el circuito mostrado en la figura, alimentado con una fuente de 120V.
   R_n &= 1.818 \, \Omega
 \end{align*}
 
+\section{Ejercicio 2}
+
+\section{Ejercicio 3: Ley de Voltaje de Kirchoff}
+\subsection{Planteamiento}
+Se realizan los cálculos, el montaje y la simulación del circuito,
+debido a limitaciones para poder conseguir una resistencia de $180
+\Omega$ como indica el ejercicio, cambiamos dicha resistencia por una
+de $150 \Omega$
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=0.48\columnwidth]{circuito3.png}
+    \caption{Circuito para resolver mediante la ley de Kirchoff}
+\end{figure}
+\subsection{Cálculos matemáticos}
+Para este circuito se ha designado a la malla que contiene la fuente
+de 9V como la Malla1, la malla superior como la Malla 2 y la malla
+inferior derecha como la Malla 3. Iniciando los cálculos para la malla 1:
+\begin{align*}
+  -9 + 150(I_1 - I_2) + 470(I_1 - I_3) = 0 \\
+  -9 + 150I_1 - 150I_2 + 470I_1 - 470I_3 = 0 \\
+  -9 + 620I_1 - 150I_2 - 470I_3 = 0 \\
+  620I_1 - 150I_2 - 470I_3 = 9
+\end{align*}
+Esa será nuestra ecuación número 1, procediendo con la malla 2:
+\begin{align*}
+  100I_2 + 220(I_2 - I_3) + 150(I_2 - I_1) = 0 \\
+  100I_2 + 220I_2 - 220I_3 + 150I_2 - 150I_1 = 0 \\
+  470I_2 - 220I_3 - 150I_1 = 0 \\
+  -150I_1 + 470I_2 - 220I_3 = 0
+\end{align*}
+Esa será la segunda ecuación, procediendo con tercera y última malla:
+\begin{align*}
+  330I_3 + 470(I_3 - I_1) + 220(I_3 - I_2) = 0 \\
+  330I_3 + 470I_3 - 470I_1 + 220I_3 - 220I_2 = 0 \\
+  1020I_3 - 470I_1 - 220I_2 = 0 \\
+  -470I_1 - 220I_2 + 1020I_3 = 0
+\end{align*}
+Esa es la tercera ecuación, para encontrar los valores de las
+intensidades, se hará uso de una matriz y será resuelta usando el
+método de Cramer, la matriz será:
+\begin{equation}
+  \begin{vmatrix}
+    
+  \end{vmatrix}
+\end{equation}
+
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
 
