@@ -2,12 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{imagenes/}}
 \IEEEoverridecommandlockouts
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \begin{document}
-\title{Grupo 1: Estación de confort para puesto de estudio}
+
+\title{Taller de Física - Momento 2}
 
 \author{
     \IEEEauthorblockN{1\textsuperscript{st} Kevin Ramírez Corrales}
@@ -26,15 +30,32 @@
 \maketitle
 
 \begin{abstract}
+    En este informe se desarrollan diferentes análisis de circuitos eléctricos
+    aplicando métodos como conversión estrella-triángulo, divisores de voltaje
+    y corriente, y leyes de Kirchhoff. Se realizaron cálculos matemáticos,
+    simulaciones y montaje físico para validar los resultados obtenidos.
 \end{abstract}
 
 \begin{IEEEkeywords}
+    Circuitos eléctricos, divisor de voltaje, divisor de corriente,
+    leyes de Kirchhoff, análisis de mallas, resistencia equivalente
 \end{IEEEkeywords}
 
 \section{Introducción}
-\section{Metodología}
+En este trabajo se analizan circuitos resistivos utilizando diferentes técnicas
+vistas en clase. Se emplean pilas de 9V en los montajes realizados.
+Los resultados obtenidos permiten verificar el comportamiento de los circuitos
+mediante cálculos teóricos y simulaciones.
+
 \section{Desarrollo}
 \section{Ejercicio 1: Conversor Estrella Triangulo}
+\subsection{Planteamiento}
+Se analiza el circuito mostrado en la figura, alimentado con una fuente de 120V.
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=0.48\columnwidth]{circuito1.png}
+    \caption{Circuito para conversión estrella-triángulo}
+\end{figure}
 \subsection{Cálculos matemáticos}
 \begin{align*}
   R_a &= \frac{12.5 \cdot 10}{12.5 + 10 + 5} \\
@@ -49,7 +70,6 @@
 \end{align*}
 
 \section{Decisiones técnicas}
-\begin{itemize}
-\end{itemize}
+Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
 
 \end{document}
