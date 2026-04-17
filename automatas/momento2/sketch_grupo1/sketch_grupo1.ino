@@ -111,10 +111,8 @@ void loop() {
       digitalWrite(PIN_MOTOR, estadoManualSalida);
     }
 
-    lcd.clear();
-
     lcd.setCursor(0, 0);
-    lcd.print("T:");
+    lcd.print("T: ");
     lcd.print(temperaturaActual);
     lcd.print("C");
 
