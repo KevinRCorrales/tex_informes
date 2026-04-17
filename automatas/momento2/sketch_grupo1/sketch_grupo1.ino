@@ -26,14 +26,13 @@ float temperaturaActual = 0.0;
 int valorLuz = 0;
 
 bool sistemaManual = false;
-bool estadoManualSalida = false;
 
 // Antirrebote
-bool estadoAnteriorModo = HIGH;
-bool estadoAnteriorAccion = HIGH;
+bool estadoAnteriorManual = HIGH;
+bool estadoAnteriorAuto = HIGH;
 
-unsigned long ultimoTiempoModo = 0;
-unsigned long ultimoTiempoAccion = 0;
+unsigned long ultimoTiempoManual = 0;
+unsigned long ultimoTiempoAuto = 0;
 const unsigned long debounceDelay = 200;
 
 // Tiempo
@@ -41,6 +40,7 @@ unsigned long ultimoTiempoLectura = 0;
 const unsigned long intervaloLectura = 500;
 
 void setup() {
+  Serial.begin(9600);
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_MOTOR, OUTPUT);
 
@@ -55,32 +55,32 @@ void setup() {
 void loop() {
 
   // -------- BOTONES --------
-  bool lecturaModo = digitalRead(PIN_BOTON_MANUAL);
-  bool lecturaAccion = digitalRead(PIN_BOTON_AUTO);
+  bool lecturaManual = digitalRead(PIN_BOTON_MANUAL);
+  bool lecturaAuto = digitalRead(PIN_BOTON_AUTO);
 
   // Antirrebote botón modo
-  if (lecturaModo != estadoAnteriorModo) {
-    ultimoTiempoModo = millis();
+  if (lecturaManual != estadoAnteriorManual) {
+    ultimoTiempoManual = millis();
   }
 
-  if ((millis() - ultimoTiempoModo) > debounceDelay) {
-    if (lecturaModo == LOW && estadoAnteriorModo == HIGH) {
+  if ((millis() - ultimoTiempoManual) > debounceDelay) {
+    if (lecturaManual == LOW && estadoAnteriorManual == HIGH) {
       sistemaManual = !sistemaManual;
     }
   }
-  estadoAnteriorModo = lecturaModo;
+  estadoAnteriorManual = lecturaManual;
 
   // Antirrebote botón acción
-  if (lecturaAccion != estadoAnteriorAccion) {
-    ultimoTiempoAccion = millis();
+  if (lecturaAuto != estadoAnteriorAuto) {
+    ultimoTiempoAuto = millis();
   }
 
-  if ((millis() - ultimoTiempoAccion) > debounceDelay) {
-    if (lecturaAccion == LOW && estadoAnteriorAccion == HIGH) {
-      estadoManualSalida = !estadoManualSalida;
+  if ((millis() - ultimoTiempoAuto) > debounceDelay) {
+    if (lecturaAuto == LOW && estadoAnteriorAuto == HIGH) {
+      sistemaManual = !sistemaManual;
     }
   }
-  estadoAnteriorAccion = lecturaAccion;
+  estadoAnteriorAuto = lecturaAuto;
 
   // -------- CONTROL CON MILLIS --------
   if (millis() - ultimoTiempoLectura >= intervaloLectura) {
@@ -108,7 +108,7 @@ void loop() {
       int brillo = map(lecturaPot, 0, 1023, 0, 255);
       analogWrite(PIN_LED, brillo);
 
-      digitalWrite(PIN_MOTOR, estadoManualSalida);
+      digitalWrite(PIN_MOTOR, sistemaManual);
     }
 
     lcd.setCursor(0, 0);
@@ -118,10 +118,13 @@ void loop() {
 
     lcd.setCursor(0, 1);
 
+    Serial.print("Estado del sistema: ");
     if (sistemaManual) {
       lcd.print("MAN ");
+      Serial.println("MANUAL");
     } else {
       lcd.print("AUTO ");
+      Serial.println("AUTOMATICO");
     }
 
     lcd.print("L:");
