@@ -53,7 +53,7 @@ mediante cálculos teóricos y simulaciones.
 Se analiza el circuito mostrado en la figura, alimentado con una fuente de 120V.
 \begin{figure} [h]
     \centering
-    \includegraphics[width=0.48\columnwidth]{circuito1.png}
+    \includegraphics[width=0.48\columnwidth]{circuito1}
     \caption{Circuito para conversión estrella-triángulo}
 \end{figure}
 \subsection{Cálculos matemáticos}
@@ -79,7 +79,7 @@ debido a limitaciones para poder conseguir una resistencia de $180
 de $150 \Omega$
 \begin{figure} [h]
     \centering
-    \includegraphics[width=0.48\columnwidth]{circuito3.png}
+    \includegraphics[width=0.48\columnwidth]{circuito3}
     \caption{Circuito para resolver mediante la ley de Kirchoff}
 \end{figure}
 \subsection{Cálculos matemáticos}
@@ -111,9 +111,12 @@ intensidades, se hará uso de una matriz y será resuelta usando el
 método de Cramer, la matriz será:
 \begin{equation}
   \begin{vmatrix}
-    
+    620 && -150 && -470 \\
+    -150 && 470 && -220 \\
+    -470 && -220 && 1020
   \end{vmatrix}
 \end{equation}
+
 
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
