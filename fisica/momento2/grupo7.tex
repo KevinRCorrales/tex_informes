@@ -290,9 +290,89 @@ Ahora, calculamos el determinante para $I_1$:
 
 Con la $\Delta_{I_1}$ podemos hallar el valor de $I_1$:
 
+\begin{equation*}
+  I_1 = \frac{\Delta_{I_1}}{\Delta} = \frac{3,879,000}{109,427,000} = 0.035448
+\end{equation*}
+
+Esto confirma que la corritente en la malla 1 es de $0.035448$ amperios, lo que se 
+traduce a $30.448$ mA. Ahora, se calculará la corriente de la malla 2:
+
+Hallamos el determinante de $I_2$:
+
 \begin{align*}
-  I_1 = \frac{\Delta_{I_1}}{\Delta}
+  \Delta_{I_2} =
+  \begin{split}
+    \begin{vmatrix}
+      620  && 9 && -470 \\
+      -150 && 0 && -220 \\
+      -470 && 0 && 1020
+    \end{vmatrix}
+  \end{split} \\ \\
+  \Delta_{I_2} =
+  \begin{split}
+    \begin{vmatrix}
+      620  && 9 && -470 \\
+      -150 && 0 && -220 \\
+      -470 && 0 && 1020 \\
+      620  && 9 && -470 \\
+      -150 && 0 && -220
+    \end{vmatrix}
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_{I_2} = 0 + 0 + 930,600 - (0 + 0 - 1,377,000) \\
+    \Delta_{I_2} = 930,600 + 1,377,000 \\
+    \Delta_{I_2} = 2,307,600
+  \end{split}
 \end{align*}
+
+Con la $\Delta_{I_2}$ podemos hallar el valor de $I_2$:
+
+\begin{equation*}
+  I_2 = \frac{\Delta_{I_2}}{\Delta} = \frac{2,307,600}{109,427,000} = 0.021088
+\end{equation*}
+
+La corriente en la malla 2 es de $0.021088$ amperios, que se pueden expresar como 
+$21.088$ mA, finalmente calculamos la corriente para la malla 3:
+
+Hallamos el determinante de $I_3$:
+
+\begin{align*}
+  \Delta_{I_3} =
+  \begin{split}
+    \begin{vmatrix}
+       620 && -150 && 9 \\
+      -150 &&  470 && 0 \\
+      -470 && -220 && 0
+    \end{vmatrix}
+  \end{split} \\ \\
+  \Delta_{I_3} =
+  \begin{split}
+    \begin{vmatrix}
+       620 && -150 && 9 \\
+      -150 &&  470 && 0 \\
+      -470 && -220 && 0 \\
+       620 && -150 && 9 \\
+      -150 &&  470 && 0
+    \end{vmatrix}
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_{I_3} = 0 + 297,000 + 0 - (-1,988,100 + 0 + 0) \\
+    \Delta_{I_3} = 297,000 + 1,988,100 \\
+    \Delta_{I_3} = 2,285,100
+  \end{split}
+\end{align*}
+
+Con la $\Delta_{I_3}$ podemos hallar el valor de $I_3$:
+
+\begin{equation*}
+  I_3 = \frac{\Delta_{I_3}}{\Delta} = \frac{2,285,100}{109,427,000}  = 0.020882
+\end{equation*}
+
+Así, concluimos que la corriente en la malla 3 es de $0.020882$ amperios, lo mismo 
+que decir $20.882$ mA.
+
+Dado que hay resistencias compartiendo malla, hallamos la intensidad de esas 
+resistencias usando los valores encontrados:
 
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
