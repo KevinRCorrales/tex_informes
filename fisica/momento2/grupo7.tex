@@ -211,6 +211,88 @@ método de Cramer, la matriz será:
   \end{vmatrix}
 \end{equation}
 
+Repetimos los valores de las dos primeras ecuaciones para resolver
+usando diagonales:
+\begin{equation}
+  \begin{vmatrix}
+    620 && -150 && -470 \\
+    -150 && 470 && -220 \\
+    -470 && -220 && 1020 \\
+    620 && -150 && -470 \\
+    -150 && 470 && -220
+  \end{vmatrix}
+\end{equation}
+
+Así tenemos que el determinante será:
+\begin{align*}
+  \begin{split}
+    \Delta_1 = 620 \cdot 470 \cdot 1020 + [(-150) \cdot \\
+    (-220) \cdot (-470)] + [(-470) \cdot (-150) \cdot (-220)]
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_1 = 297,228,000 + (-15,510,000) + (-15,510,000)
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_1 = 266,208,000
+  \end{split}
+\end{align*}
+\begin{align*}
+  \begin{split}
+    \Delta_2 = (-470) \cdot 470 \cdot (-470) + [(-220) \cdot \\
+    (-220) \cdot 620] + [1020 \cdot (-150) \cdot (-150)]
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_2 = 103,823,000 + 30,008,000 + 22,950,000
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_2 = 156,781,000
+  \end{split}
+\end{align*}
+\begin{align*}
+  \begin{split}
+    \Delta = \Delta_1 - \Delta_2
+  \end{split} \\ \\
+  \begin{split}
+    \Delta = 266,208,000 - 156,781,000
+  \end{split} \\ \\
+  \begin{split}
+    \Delta = 109,427,000
+  \end{split}
+\end{align*}
+
+Ahora, calculamos el determinante para $I_1$:
+
+\begin{align*}
+  \Delta_{I_1} =
+  \begin{split}
+    \begin{vmatrix}
+      9 && -150 && -470 \\
+      0 && 470 && -220 \\
+      0 && -220 && 1020
+    \end{vmatrix}
+  \end{split} \\ \\
+  \Delta_{I_1} =
+  \begin{split}
+    \begin{vmatrix}
+      9 && -150 && -470 \\
+      0 &&  470 && -220 \\
+      0 && -220 && 1020 \\
+      9 && -150 && -470 \\
+      0 &&  470 && -220
+    \end{vmatrix}
+  \end{split} \\ \\
+  \begin{split}
+    \Delta_{I_1} = 4,314,600 + 0 + 0 - (0 + 435,600 + 0) \\
+    \Delta_{I_1} = 4,314,600 - 435,600 \\
+    \Delta_{I_1} = 3,879,000
+  \end{split}
+\end{align*}
+
+Con la $\Delta_{I_1}$ podemos hallar el valor de $I_1$:
+
+\begin{align*}
+  I_1 = \frac{\Delta_{I_1}}{\Delta}
+\end{align*}
 
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
