@@ -60,12 +60,14 @@ void loop() {
 
   // Antirrebote botón modo
   if (lecturaManual != estadoAnteriorManual) {
+    Serial.println("Pulsación registrada");
     ultimoTiempoManual = millis();
   }
 
   if ((millis() - ultimoTiempoManual) > debounceDelay) {
     if (lecturaManual == LOW && estadoAnteriorManual == HIGH) {
-      sistemaManual = !sistemaManual;
+      Serial.println("Cambiando a Manual");
+      sistemaManual = true;
     }
   }
   estadoAnteriorManual = lecturaManual;
@@ -73,11 +75,13 @@ void loop() {
   // Antirrebote botón acción
   if (lecturaAuto != estadoAnteriorAuto) {
     ultimoTiempoAuto = millis();
+    Serial.println("Pulsación registrada");
   }
 
   if ((millis() - ultimoTiempoAuto) > debounceDelay) {
     if (lecturaAuto == LOW && estadoAnteriorAuto == HIGH) {
-      sistemaManual = !sistemaManual;
+      Serial.println("Cambiando a Automático");
+      sistemaManual = false;
     }
   }
   estadoAnteriorAuto = lecturaAuto;
