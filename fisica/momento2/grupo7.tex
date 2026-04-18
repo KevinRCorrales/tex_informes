@@ -4,8 +4,10 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{circuitikz}
 \graphicspath{{assets/}}
 \IEEEoverridecommandlockouts
+\raggedbottom
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -48,28 +50,120 @@ Los resultados obtenidos permiten verificar el comportamiento de los circuitos
 mediante cálculos teóricos y simulaciones.
 
 \section{Desarrollo}
-\section{Ejercicio 1: Conversor Estrella Triangulo}
-\subsection{Planteamiento}
-Se analiza el circuito mostrado en la figura, alimentado con una fuente de 120V.
-\begin{figure} [h]
+
+\subsection{Ejercicio 1: Conversor Estrella Triangulo}
+\subsubsection{Planteamiento}
+Se analiza el circuito mostrado en la figura, alimentado con una bateria de 9V.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.48\columnwidth]{circuito1}
     \caption{Circuito para conversión estrella-triángulo}
 \end{figure}
-\subsection{Cálculos matemáticos}
-\begin{align*}
-  R_a &= \frac{12.5 \cdot 10}{12.5 + 10 + 5} \\
-  R_a &= \frac{125}{27.5} \\
-  R_a &= 4.545 \, \Omega \\[15pt] 
-  R_c &= \frac{12.5 \cdot 5}{27.5} \\
-  R_c &= \frac{62.5}{27.5} \\
-  R_c &= 2.273 \, \Omega \\[15pt]
-  R_n &= \frac{10 \cdot 5}{27.5} \\
-  R_n &= \frac{50}{27.5} \\
-  R_n &= 1.818 \, \Omega
-\end{align*}
+\subsubsection{Simulación}
+Se realizó la simulación del circuito utilizando el software Qucs, obteniendo los siguientes resultados:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\columnwidth]{simulacion1}
+    \caption{Resultados de la simulación en Qucs}
+\end{figure}
+\subsubsection{Cálculos matemáticos}
+\paragraph{Cálculos de Resistencias Equivalentes ($R_a, R_c, R_n$)}
+    Utilizando las fórmulas de conversión:
 
-\section{Ejercicio 2}
+\begin{equation*}
+R_a = \frac{R_{ac} \cdot R_{an}}{R_{ac} + R_{an} + R_{cn}} = \frac{12.5 \cdot 10}{12.5 + 10 + 5} = \frac{125}{27.5} = 4.545 \, \Omega
+\end{equation*}
+\begin{equation*}
+R_c = \frac{R_{ac} \cdot R_{cn}}{27.5} = \frac{12.5 \cdot 5}{27.5} = \frac{62.5}{27.5} = 2.273 \, \Omega
+\end{equation*}
+\begin{equation*}
+R_n = \frac{R_{an} \cdot R_{cn}}{27.5} = \frac{10 \cdot 5}{27.5} = \frac{50}{27.5} = 1.818 \, \Omega
+\end{equation*}
+
+\paragraph{Simplificación del circuito}
+\begin{circuitikz}[american]
+    % Fuente de voltaje
+    \draw (0,0) to[V=120V] (0,3);
+    % Parte superior (resistencia 4.545)
+    \draw (0,3) to[R=4.545$\Omega$] (2.5,3);
+    % Rama central (resistencias 2.273 y 15)
+    \draw (2.5,3) to[R=2.273$\Omega$] (2.5,1.5)
+                  to[R=15$\Omega$] (2.5,0);           
+    % Rama derecha (resistencias 1.818 y 20)
+    \draw (2.5,3) -- (4.5,3) to[R=1.818$\Omega$] (4.5,1.5)
+                             to[R=20$\Omega$] (4.5,0);                   
+    % Rama final (resistencia 30)
+    \draw (4.5,3) -- (6,3) to[R=30$\Omega$] (6,0);
+    % Cierre inferior
+    \draw (0,0) -- (6,0);
+\end{circuitikz}
+Tras la conversión, las nuevas resistencias se suman en serie con las resistencias inferiores:
+
+\begin{itemize}
+    \item Rama izquierda: $2.273 \, \Omega + 15 \, \Omega = 17.273 \, \Omega$
+    \item Rama central: $1.818 \, \Omega + 20 \, \Omega = 21.818 \, \Omega$
+\end{itemize}
+
+\paragraph{Cálculo de Resistencia Equivalente y Corriente}
+
+\begin{equation*}
+R_{par} = \frac{R_1 \cdot R_2}{R_1 + R_2} = \frac{17.273 \cdot 21.818}{17.273 + 21.818} \approx 9.64\,\Omega
+\end{equation*}
+
+\begin{equation*}
+R_{total\_rama} = 4.545 + 9.64 = 14.185\,\Omega
+\end{equation*}
+
+\vspace{1cm}
+\begin{center}
+\begin{circuitikz}[american]
+    \draw (0,0) to[V=120V, invert] (0,3)
+    to[R=14.185$\Omega$] (3,3) -- (3,0) -- (0,0);
+    \draw (3,3) to[R=30$\Omega$] (3,0);
+\end{circuitikz}
+\end{center}
+
+\begin{equation*}
+R_{eq} = \frac{14.185 \cdot 30}{14.185 + 30} \approx 9.63\,\Omega
+\end{equation*}
+\begin{equation*}
+I = \frac{V}{R_{eq}} = \frac{120}{9.63} \approx 12.46\,\text{A}
+\end{equation*}
+
+\subsection{Ejercicio 2: Divisor de voltaje y corriente}
+\subsubsection{Ejercicio 2.1: Divisor de voltaje}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\columnwidth]{circuito2_1}
+    \caption{Circuito para divisor de voltaje}
+\end{figure}
+
+\subsubsection{Montaje físico}
+Se realizó el montaje del circuito utilizando resistencias de 100 $\Omega$, 220 $\Omega$ 
+y 680 $\Omega$ para las ramas del circuito, y se alimentó con una bateria de 9V. 
+Se midieron los voltajes en cada rama para validar los cálculos teóricos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\columnwidth]{montaje2-1}
+\caption{Montaje físico del circuito}
+\end{figure}
+
+\subsubsection{Cálculos matemáticos}
+Para calcular el voltaje en cada rama del circuito, se utiliza la fórmula del divisor de voltaje:
+
+\subsubsection{Mediciones}
+Se midieron los voltajes en cada rama del circuito utilizando un multímetro, 
+obteniendo los siguientes resultados:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\columnwidth]{medicion2_1_R1}
+\includegraphics[width=0.3\columnwidth]{medicion2_1_R2}
+\includegraphics[width=0.3\columnwidth]{medicion2_1_R3}
+\caption{Mediciones de voltaje en R1, R2 y R3}
+\end{figure}
 
 \section{Ejercicio 3: Ley de Voltaje de Kirchoff}
 \subsection{Planteamiento}
@@ -77,7 +171,7 @@ Se realizan los cálculos, el montaje y la simulación del circuito,
 debido a limitaciones para poder conseguir una resistencia de $180
 \Omega$ como indica el ejercicio, cambiamos dicha resistencia por una
 de $150 \Omega$
-\begin{figure} [h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.48\columnwidth]{circuito3}
     \caption{Circuito para resolver mediante la ley de Kirchoff}
