@@ -10,7 +10,7 @@ Grupo 1: Estación de confort para puesto de estudio
 // Pines
 const int PIN_SENSOR = 2;
 const int PIN_LED = 6;
-const int PIN_MOTOR = 11;
+const int PIN_MOTOR = 8;
 const int PIN_BOTON_MANUAL = 3;
 const int PIN_BOTON_AUTO = 4;
 const int PIN_POT = A1;
@@ -26,6 +26,7 @@ float temperaturaActual = 0.0;
 int valorLuz = 0;
 
 bool sistemaManual = false;
+bool estadoMotorManual = false;
 
 // Antirrebote
 bool estadoAnteriorManual = HIGH;
@@ -80,8 +81,7 @@ void loop() {
 
   if ((millis() - ultimoTiempoAuto) > debounceDelay) {
     if (lecturaAuto == LOW && estadoAnteriorAuto == HIGH) {
-      Serial.println("Cambiando a Automático");
-      sistemaManual = false;
+      estadoMotorManual = !estadoMotorManual;
     }
   }
   estadoAnteriorAuto = lecturaAuto;
@@ -89,6 +89,7 @@ void loop() {
   // -------- CONTROL CON MILLIS --------
   if (millis() - ultimoTiempoLectura >= intervaloLectura) {
     ultimoTiempoLectura = millis();
+    lcd.clear();
 
     sensor.requestTemperatures();
     temperaturaActual = sensor.getTempCByIndex(0);
@@ -102,16 +103,16 @@ void loop() {
       analogWrite(PIN_LED, brillo);
 
       if (temperaturaActual > 28) {
-        analogWrite(PIN_MOTOR, 255);
+        digitalWrite(PIN_MOTOR, HIGH);
       } else {
-        digitalWrite(PIN_MOTOR, 0);
+        digitalWrite(PIN_MOTOR, LOW);
       }
 
     } else {
 
-      int analog = map(lecturaPot, 0, 1023, 0, 255);
-      analogWrite(PIN_LED, analog);
-      analogWrite(PIN_MOTOR, analog);
+      int brillo = map(lecturaPot, 0, 1023, 0, 255);
+      analogWrite(PIN_LED, brillo);
+      digitalWrite(PIN_MOTOR, estadoMotorManual);
     }
 
     lcd.setCursor(0, 0);
