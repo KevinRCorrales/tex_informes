@@ -102,17 +102,16 @@ void loop() {
       analogWrite(PIN_LED, brillo);
 
       if (temperaturaActual > 28) {
-        digitalWrite(PIN_MOTOR, HIGH);
+        analogWrite(PIN_MOTOR, 255);
       } else {
-        digitalWrite(PIN_MOTOR, LOW);
+        digitalWrite(PIN_MOTOR, 0);
       }
 
     } else {
 
-      int brillo = map(lecturaPot, 0, 1023, 0, 255);
-      analogWrite(PIN_LED, brillo);
-
-      digitalWrite(PIN_MOTOR, sistemaManual);
+      int analog = map(lecturaPot, 0, 1023, 0, 255);
+      analogWrite(PIN_LED, analog);
+      analogWrite(PIN_MOTOR, analog);
     }
 
     lcd.setCursor(0, 0);
