@@ -143,7 +143,7 @@ R_{\text{rama}} &= 4.545 + 9.64 = 14.185\,\Omega
 \begin{figure}[H]
 \centering
 \begin{circuitikz}[american]
-    \draw (0,0) to[V=120V, invert] (0,3)
+    \draw (0,0) to[V=9V, invert] (0,3)
     to[R=14.185$\Omega$] (3,3) -- (3,0) -- (0,0);
     \draw (3,3) to[R=30$\Omega$] (3,0);
 \end{circuitikz}
@@ -160,7 +160,7 @@ R_{eq} &= \frac{14.185 \cdot 30}{14.185 + 30}
 Y la corriente total del circuito:
 
 \begin{align*}
-I &= \frac{V}{R_{eq}} = \frac{120}{9.63} \approx 12.46\,\text{A}
+I &= \frac{V}{R_{eq}} = \frac{9}{9.63} \approx 12.46\,\text{A}
 \end{align*}
 
 %Esto es para ubicarme y separar los ejercicios, no es parte del informe
@@ -261,16 +261,15 @@ y 680 $\Omega$ para las ramas del circuito, y se alimentó con una bateria de 9V
 \end{figure}
 
 \paragraph{Simulación del circuito 2.2:}
-El circuito fue simulado utilizando el software \textit{Qucs}, obteniendo los resultados que se 
+El circuito fue simulado utilizando el software \textit{Qucs-S}, obteniendo los resultados que se 
 muestran en la %Fig.~\ref{fig:sim2_2}.
 
-%Falta la imagen de la simulación del circuito 2.2
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.48\columnwidth]{simulacion2-2}
-%    \caption{Resultados obtenidos en la simulación del circuito 2.2}
-%    \label{fig:sim2_2}
-%\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.48\columnwidth]{simulacion2-2}
+  \caption{Resultados obtenidos en la simulación del circuito 2.2}
+  \label{fig:sim2_2}
+\end{figure}
 
 \paragraph{Cálculos matemáticos}
 %Falta el desarrollo de los cálculos matemáticos para el divisor de corriente.
@@ -506,6 +505,24 @@ que decir $20.882$ mA.
 
 Dado que hay resistencias compartiendo malla, hallamos la intensidad de esas 
 resistencias usando los valores encontrados:
+
+\begin{align*}
+  I_1 - I_2 = I_{150} \\
+  0.035448 - 0.021088 = I_{150} \\
+  0.01436 = I_{150} \\ \\
+  I_2 - I_3 = I_{220} \\
+  0.021088 - 0.020882 = I_{220} \\
+  0.000206 = I_{220} \\ \\
+  I_1 - I_3 = I_{470} \\
+  0.035448 - 0.020882 = I_{470} \\
+  0.014566 = I_{470}
+\end{align*}
+
+Como se observa el valor de la intensidad para $I_{150}$ es $0.01436$ amperios, lo 
+que se expresa como $14.36$ mA, por otro lado, la intensidad para $I_{220}$ es de 
+$0.000206$ amperios, se puede expresar como $0.206$ mA, que se puede reexpresar 
+como $206 \mu$A, finalmente $I_{470}$ tiene una intensidad de $0.014566$ amperios, 
+que se traducen en $14.566$ mA.
 
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
