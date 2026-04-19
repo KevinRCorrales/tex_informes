@@ -309,6 +309,7 @@ de $150 \Omega$
     \caption{Circuito para resolver mediante la ley de Kirchoff}
 \end{figure}
 \subsection{Cálculos matemáticos}
+\subsubsection{Determinantes del sistema 3x3}
 Para este circuito se ha designado a la malla que contiene la fuente
 de 9V como la Malla1, la malla superior como la Malla 2 y la malla
 inferior derecha como la Malla 3. Iniciando los cálculos para la malla 1:
@@ -500,6 +501,8 @@ Con la $\Delta_{I_3}$ podemos hallar el valor de $I_3$:
   I_3 = \frac{\Delta_{I_3}}{\Delta} = \frac{2,285,100}{109,427,000}  = 0.020882
 \end{equation*}
 
+\subsubsection{Intensidades del circuito}
+
 Así, concluimos que la corriente en la malla 3 es de $0.020882$ amperios, lo mismo 
 que decir $20.882$ mA.
 
@@ -523,6 +526,18 @@ que se expresa como $14.36$ mA, por otro lado, la intensidad para $I_{220}$ es d
 $0.000206$ amperios, se puede expresar como $0.206$ mA, que se puede reexpresar 
 como $206 \mu$A, finalmente $I_{470}$ tiene una intensidad de $0.014566$ amperios, 
 que se traducen en $14.566$ mA.
+
+\subsubsection{Voltajes del circuito}
+
+Usando ley de Ohm con la fórmula del voltaje $V = R \cdot I$ para cada
+resistencia en las mallas se pudo calcular los siguientes voltajes:
+
+\begin{align*}
+  150 \cdot 0.01436 = V_{R_{150}} \\
+  2.154 = V_{R_{150}} \\ \\
+  100 \cdot 0.021088 = V_{R_{100}} \\
+  2.1088 = V_{R_{100}}
+\end{align*}
 
 \section{Decisiones técnicas}
 Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
