@@ -10,7 +10,7 @@ Grupo 1: Estación de confort para puesto de estudio
 // Pines
 const int PIN_SENSOR = 2;
 const int PIN_LED = 6;
-const int PIN_MOTOR = 8;
+const int PIN_MOTOR = 11;
 const int PIN_BOTON_MANUAL = 3;
 const int PIN_BOTON_AUTO = 4;
 const int PIN_POT = A1;
