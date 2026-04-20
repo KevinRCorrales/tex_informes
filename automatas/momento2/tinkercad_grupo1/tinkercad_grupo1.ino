@@ -1,5 +1,9 @@
 /*
-Grupo 1: Estación de confort para puesto de estudio
+Grupo 1: Estación de confort para puesto de estudio [ADAPTADO A TINKERCAD]
+
+<Dadas las limitaciones de TinkerCAD y otros simuladores, este código ha sido
+adaptado para NO usar el protocolo OneWire ni la librería DallasTemperature,
+en su lugar usa el sensor de TinkerCAD: el TMP36>
 
 Sistema que evalua las condiciones de un puesto de trabajo o estudio
 y a partir de los resultados toma decisiones para ajustar la luz del ambiente
@@ -23,15 +27,13 @@ sistema (AUTO o MAN), el valor de la luz y el estado del motor.
     y cambia a autómatico para que el sistema decida por él
 */
 
-// Librerías necesarias para el sensor de temperatura y el LCD con módulo I2C
-#include <OneWire.h>
-#include <DallasTemperature.h>
+// Librerías necesarias para el LCD con módulo I2C
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 // Pines
-const int PIN_SENSOR = 2;
-const int PIN_LED = 6; // Pin PWM para variar el brillo
+const int PIN_SENSOR = A3;  // El sensor de TinkerCAD usa señales analogicas en vez del protocolo OneWire
+const int PIN_LED = 6;      // Pin PWM para variar el brillo
 const int PIN_MOTOR = 7;
 const int PIN_BOTON_MODO = 3;
 const int PIN_BOTON_MOTOR = 4;
@@ -39,10 +41,7 @@ const int PIN_BOTON_MOTOR = 4;
 const int PIN_POT = A1;
 const int PIN_LDR = A0;
 
-// Objetos necesarios para el manejo del sensor por medio del protocolo
-// OneWire, las solicitudes de temperatura y el LCD usando el módulo I2C
-OneWire onewire(PIN_SENSOR);
-DallasTemperature sensor(&onewire);
+// Objetos necesarios para el manejo del LCD con módulo I2C
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // Variables de inicio
@@ -63,14 +62,14 @@ bool estadoBotonMotor = HIGH;
 
 unsigned long ultimoTiempoModo = 0;
 unsigned long ultimoTiempoMotor = 0;
-const unsigned long debounceDelay = 15; // Antirrebote
+const unsigned long debounceDelay = 15;  // Antirrebote
 
 // Tiempo
 unsigned long ultimoTiempoLectura = 0;
 const unsigned long intervaloLectura = 1000;  // Un segundo para la actualización
 
 void setup() {
-  Serial.begin(9600); // Comunicación en el puerto serial, debe configurarse en 9600 como está en el begin
+  Serial.begin(9600);  // Comunicación en el puerto serial, debe configurarse en 9600 como está en el begin
   // Led y motor como salida
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_MOTOR, OUTPUT);
@@ -79,9 +78,8 @@ void setup() {
   pinMode(PIN_BOTON_MODO, INPUT_PULLUP);
   pinMode(PIN_BOTON_MOTOR, INPUT_PULLUP);
 
-  sensor.begin(); // Iniciat el sensor
-  lcd.init(); // Iniciar el LCD
-  lcd.backlight(); // Encender el fondo del LCD
+  lcd.init();       // Iniciar el LCD
+  lcd.backlight();  // Encender el fondo del LCD
 }
 
 void loop() {
@@ -141,8 +139,9 @@ void loop() {
     ultimoTiempoLectura = millis();
 
     // Tomamos la temperatura registrada por el sensor y la convertimos a grados centigrados
-    sensor.requestTemperatures();
-    temperaturaActual = sensor.getTempCByIndex(0);
+    int lectura = analogRead(PIN_SENSOR);
+    float voltaje = 5.0 / 1024 * lectura;  // Voltaje
+    float temperaturaActual = voltaje * 100 - 50;
 
     // Consultamos el valor registrado por el sensor de luz y por el potenciometro
     valorLuz = analogRead(PIN_LDR);
