@@ -203,9 +203,11 @@ void loop() {
 
     // Escribimos unicamente en el LCD el valor de la luz y el estado booleano del botón (1 o 0)
     lcd.print(" L:");
+    lcd.setCursor(7, 1);
     lcd.print(valorLuz);
 
     lcd.print(" M:");
     lcd.print(digitalRead(PIN_MOTOR));
+    lcd.print(" ");
   }
 }
