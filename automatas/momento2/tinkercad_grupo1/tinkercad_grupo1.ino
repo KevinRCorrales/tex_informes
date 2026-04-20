@@ -178,8 +178,9 @@ void loop() {
     // Nos situamos en la primer fila y primer columna del LCD y escribimos la temperatura
     lcd.setCursor(0, 0);
     lcd.print("T: ");
-    lcd.print(temperaturaActual);
-    lcd.print("C");
+    lcd.print(temperaturaActual);  // 5 o incluso 6 caracteres e.g: 23.45 o 123.45
+    lcd.print("C ");               // 2 caracteres, esto suma 7 u 8 caracteres, ideal para una sobreescritura correcta sin usar clear
+
 
     // Bajamos a la segunda fila
     lcd.setCursor(0, 1);
