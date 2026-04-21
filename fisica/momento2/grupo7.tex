@@ -196,29 +196,35 @@ muestran en la Fig.~\ref{fig:sim2_1}.
 \end{figure}
 
 \paragraph{Cálculos Matemáticos}
-Para el circuito divisor de tensión, se determinó la resistencia total ($R_T$) mediante 
-la suma de las resistencias en serie ($R_1, R_2, R_3$):
+Para un circuito en serie, las caídas de tensión pueden determinarse directamente usando el 
+principio de divisor de voltaje:
 
 \begin{equation}
-    R_T = 100\,\Omega + 220\,\Omega + 680\,\Omega = 1000\,\Omega
+V_n = V_S \cdot \frac{R_n}{R_T}
 \end{equation}
 
-La corriente del circuito ($I$) se calculó mediante la Ley de Ohm:
+donde $R_T$ es la resistencia total:
 
-\begin{equation}
-    I = \frac{V_S}{R_T} = \frac{9\,\text{V}}{1000\,\Omega} = 9\,\text{mA}
-\end{equation}
+\begin{equation*}
+R_T = 100\,\Omega + 220\,\Omega + 680\,\Omega = 1000\,\Omega
+\end{equation*}
 
-Las caídas de tensión en cada componente se obtuvieron aplicando la ley $V_n = I \cdot R_n$:
+Aplicando la fórmula para cada resistencia:
 
-\begin{itemize}
-    \item $V_1 = 9\,\text{mA} \times 100\,\Omega = 0.9\,\text{V}$
-    \item $V_2 = 9\,\text{mA} \times 220\,\Omega = 1.98\,\text{V}$
-    \item $V_3 = 9\,\text{mA} \times 680\,\Omega = 6.12\,\text{V}$
-\end{itemize}
+\begin{align*}
+V_1 &= 9 \cdot \frac{100}{1000} = 9 \cdot 0.1 = 0.9\,\text{V} \\
+V_2 &= 9 \cdot \frac{220}{1000} = 9 \cdot 0.22 = 1.98\,\text{V} \\
+V_3 &= 9 \cdot \frac{680}{1000} = 9 \cdot 0.68 = 6.12\,\text{V}
+\end{align*}
 
-\textbf{Verificación:} La suma de las tensiones es $0.9\,\text{V} + 1.98\,\text{V} + 6.12\,\text{V} = 
-9\,\text{V}$, cumpliendo la Ley de Voltajes de Kirchhoff (LVK).
+\subsubsection{Verificación}
+La suma de las caídas de tensión es:
+
+\begin{equation*}
+V_1 + V_2 + V_3 = 0.9 + 1.98 + 6.12 = 9\,\text{V}
+\end{equation*}
+
+Lo cual coincide con el voltaje de la fuente, verificando la Ley de Voltajes de Kirchhoff (LVK).
 
 \paragraph{Mediciones}
 Se midieron los voltajes en cada rama del circuito utilizando un multímetro, 
@@ -278,64 +284,75 @@ muestran en la %Fig.~\ref{fig:sim2_2}.
 Se midieron las corrientes en cada rama del circuito utilizando un multímetro,
 obteniendo los siguientes resultados:
 
-%\begin{figure}[H]
-%\centering
-%\includegraphics[width=0.3\columnwidth]{medicion2_2_R1}
-%\includegraphics[width=0.3\columnwidth]{medicion2_2_R2}
-%\includegraphics[width=0.3\columnwidth]{medicion2_2_R3}
-%\caption{Mediciones de corriente en R1, R2 y R3}
-%\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\columnwidth]{medicion2_2_R1}
+  \includegraphics[width=0.3\columnwidth]{medicion2_2_R2}
+  \includegraphics[width=0.3\columnwidth]{medicion2_2_R3}
+  \caption{Mediciones de corriente en R1, R2 y R3}
+\end{figure}
 
 Los resultados obtenidos fueron:
 
 \begin{itemize}
-    \item $I_1 = 0\,\text{A}$
-    \item $I_2 = 0\,\text{A}$
-    \item $I_3 = 0\,\text{A}$
+    \item $I_1 = 39.6\,\text{mA}$
+    \item $I_2 = 26.5\,\text{mA}$
+    \item $I_3 = 12.9\,\text{mA}$
 \end{itemize}
 
 Datos que se aproximan a los resultados teóricos, con pequeñas variaciones debido a
 tolerancias en las resistencias y mediciones.
 
-\section{Ejercicio 3: Ley de Voltaje de Kirchoff}
-\subsection{Planteamiento}
+\subsection{Ejercicio 3: Ley de Voltaje de Kirchoff}
+
+\subsubsection{Planteamiento}
 Se realizan los cálculos, el montaje y la simulación del circuito,
 debido a limitaciones para poder conseguir una resistencia de $180
 \Omega$ como indica el ejercicio, cambiamos dicha resistencia por una
 de $150 \Omega$
+
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.48\columnwidth]{circuito3}
-    \caption{Circuito para resolver mediante la ley de Kirchoff}
+  \centering
+  \includegraphics[width=0.48\columnwidth]{circuito3}
+  \caption{Circuito para resolver mediante la ley de Kirchoff}
 \end{figure}
-\subsection{Cálculos matemáticos}
-\subsubsection{Determinantes del sistema 3x3}
+
+\subsubsection{Cálculos matemáticos}
+
+\paragraph{Determinantes del sistema 3x3}
 Para este circuito se ha designado a la malla que contiene la fuente
 de 9V como la Malla1, la malla superior como la Malla 2 y la malla
 inferior derecha como la Malla 3. Iniciando los cálculos para la malla 1:
+
 \begin{align*}
   -9 + 150(I_1 - I_2) + 470(I_1 - I_3) = 0 \\
   -9 + 150I_1 - 150I_2 + 470I_1 - 470I_3 = 0 \\
   -9 + 620I_1 - 150I_2 - 470I_3 = 0 \\
   620I_1 - 150I_2 - 470I_3 = 9
 \end{align*}
+
 Esa será nuestra ecuación número 1, procediendo con la malla 2:
+
 \begin{align*}
   100I_2 + 220(I_2 - I_3) + 150(I_2 - I_1) = 0 \\
   100I_2 + 220I_2 - 220I_3 + 150I_2 - 150I_1 = 0 \\
   470I_2 - 220I_3 - 150I_1 = 0 \\
   -150I_1 + 470I_2 - 220I_3 = 0
 \end{align*}
+
 Esa será la segunda ecuación, procediendo con tercera y última malla:
+
 \begin{align*}
   330I_3 + 470(I_3 - I_1) + 220(I_3 - I_2) = 0 \\
   330I_3 + 470I_3 - 470I_1 + 220I_3 - 220I_2 = 0 \\
   1020I_3 - 470I_1 - 220I_2 = 0 \\
   -470I_1 - 220I_2 + 1020I_3 = 0
 \end{align*}
+
 Esa es la tercera ecuación, para encontrar los valores de las
 intensidades, se hará uso de una matriz y será resuelta usando el
 método de Cramer, la matriz será:
+
 \begin{equation}
   \begin{vmatrix}
     620 && -150 && -470 \\
@@ -346,6 +363,7 @@ método de Cramer, la matriz será:
 
 Repetimos los valores de las dos primeras ecuaciones para resolver
 usando diagonales:
+
 \begin{equation}
   \begin{vmatrix}
     620 && -150 && -470 \\
@@ -357,6 +375,7 @@ usando diagonales:
 \end{equation}
 
 Así tenemos que el determinante será:
+
 \begin{align*}
   \begin{split}
     \Delta_1 = 620 \cdot 470 \cdot 1020 + [(-150) \cdot \\
@@ -369,6 +388,7 @@ Así tenemos que el determinante será:
     \Delta_1 = 266,208,000
   \end{split}
 \end{align*}
+
 \begin{align*}
   \begin{split}
     \Delta_2 = (-470) \cdot 470 \cdot (-470) + [(-220) \cdot \\
@@ -381,6 +401,7 @@ Así tenemos que el determinante será:
     \Delta_2 = 156,781,000
   \end{split}
 \end{align*}
+
 \begin{align*}
   \begin{split}
     \Delta = \Delta_1 - \Delta_2
@@ -501,7 +522,7 @@ Con la $\Delta_{I_3}$ podemos hallar el valor de $I_3$:
   I_3 = \frac{\Delta_{I_3}}{\Delta} = \frac{2,285,100}{109,427,000}  = 0.020882
 \end{equation*}
 
-\subsubsection{Intensidades del circuito}
+\paragraph{Intensidades del circuito}
 
 Así, concluimos que la corriente en la malla 3 es de $0.020882$ amperios, lo mismo 
 que decir $20.882$ mA.
@@ -527,7 +548,7 @@ $0.000206$ amperios, se puede expresar como $0.206$ mA, que se puede reexpresar
 como $206 \mu$A, finalmente $I_{470}$ tiene una intensidad de $0.014566$ amperios, 
 que se traducen en $14.566$ mA.
 
-\subsubsection{Voltajes del circuito}
+\paragraph{Voltajes del circuito}
 
 Usando ley de Ohm con la fórmula del voltaje $V = R \cdot I$ para cada
 resistencia en las mallas se pudo calcular los siguientes voltajes:
