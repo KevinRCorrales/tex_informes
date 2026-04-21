@@ -1,6 +1,9 @@
 \documentclass[conference]{IEEEtran}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{assets/}}
 \IEEEoverridecommandlockouts
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -29,78 +32,104 @@
 \maketitle
 
 \begin{abstract}
-En este proyecto se desarrolló una estación de confort para mejorar las condiciones 
-de un puesto de estudio o trabajo. El sistema permite medir la temperatura y el nivel de 
-iluminación del entorno, mostrando los datos en una pantalla LCD I2C. Además, el sistema 
-toma decisiones automáticas como activar ventilación mediante un motor DC y regular la 
-iluminación utilizando PWM. Se implementaron modos de operación manual y automático, 
-junto con técnicas como antirrebote y temporización con millis().
+En este proyecto se desarrolló una estación de confort orientada a mejorar las condiciones 
+ambientales de un puesto de estudio. El sistema mide temperatura e iluminación, mostrando 
+los datos en una pantalla LCD I2C y tomando decisiones automáticas como la activación de 
+ventilación y el ajuste de iluminación mediante PWM. Además, se implementaron modos de 
+operación manual y automático, junto con técnicas como antirrebote y temporización con millis(), 
+permitiendo un funcionamiento estable y continuo.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Digital, antirrebote, estados, analógico, PWM, DS18B20, actuador con transistor, LCD I2C, millis()
+Arduino, sensores, automatización, PWM, LCD I2C, millis()
 \end{IEEEkeywords}
 
 \section{Introducción}
-Actualmente, las condiciones ambientales influyen directamente en el rendimiento académico y laboral. 
-Factores como la temperatura y la iluminación pueden afectar la concentración y la productividad. 
-Por ello, en este proyecto se propone el diseño de un sistema automatizado que supervise y mejore dichas 
-condiciones en un puesto de estudio.
+Las condiciones ambientales influyen directamente en el rendimiento académico y laboral. 
+Factores como la temperatura y la iluminación pueden afectar la concentración, la comodidad 
+y la productividad. Por esta razón, se propone el desarrollo de un sistema automatizado capaz 
+de supervisar estas variables y actuar de manera inteligente para mejorar el entorno de estudio.
 
 \section{Objetivos}
 \subsection{Objetivo General}
-Diseñar una estación de confort que supervise y mejore las condiciones de temperatura e iluminación 
-en un puesto de estudio, utilizando sensores y actuadores controlados por un microcontrolador.
+Diseñar una estación de confort que supervise y mejore las condiciones de temperatura e iluminación
+en un puesto de estudio.
 \subsection{Objetivos Específicos}
 \begin{itemize}
     \item Medir la temperatura ambiente utilizando un sensor DS18B20.
-    \item Medir el nivel de iluminación con un sensor LDR.
-    \item Mostrar los datos en una pantalla LCD I2C.
-    \item Implementar un sistema de control automático y manual del sistema.
+    \item Detectar el nivel de iluminación usando una LDR.
+    \item Visualizar la información en una pantalla LCD I2C.
+    \item Implementar modos de operación manual y automático.
     \item Controlar ventilación mediante un motor DC.
     \item Regular la iluminación utilizando PWM.
 \end{itemize}
 
 \section{Metodología}
-Para el desarrollo del proyecto se trabajó en equipo dividiendo tareas como programación, 
-montaje del circuito y documentación. Se utilizó una placa Arduino como microcontrolador principal, 
-junto con sensores y actuadores.
-Primero se realizó el diseño del circuito en protoboard, conectando el sensor de temperatura DS18B20, 
-la LDR para medición de luz, la pantalla LCD I2C, un motor DC y un LED para simular la iluminación.
-Luego se desarrolló el código en Arduino IDE, implementando lectura de sensores, control 
-de actuadores y visualización de datos. Se utilizó la función millis() para evitar la congelación del 
-sistema con delay() y mejorar la fluidez.
+El desarrollo del proyecto se realizó de manera colaborativa, distribuyendo tareas entre 
+programación, montaje y documentación.
+
+Inicialmente se diseñó el circuito en protoboard, integrando sensores, actuadores y la pantalla LCD. 
+Posteriormente, se desarrolló el código en Arduino IDE, implementando la lectura de sensores, 
+control de actuadores y visualización de datos.
+
+Se utilizó la función millis() para evitar bloqueos en la ejecución del programa, permitiendo 
+una respuesta más fluida del sistema.
 
 \section{Diseño del Sistema}
 \subsection{Diagrama de Funcionamiento}
-El sistema funciona a partir de la lectura constante de los sensores. Dependiendo de los valores 
+El sistema funciona a partir de la lectura constante de los sensores. Dependiendo de los valores
 obtenidos, el sistema toma decisiones automáticamente o permite control manual.
 \subsection{Condiciones de Operación}
+
 \begin{table}[h]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-Condición & Acción & Modo \\
-\hline
-Temp $>$ 28°C & Activar ventilación & Automático \\
-\hline
-Temp $\leq$ 28°C & Desactivar ventilación & Automático \\
-\hline
-Luz baja $<$ 300 & Aumentar iluminación & Automático \\
-\hline
-Luz alta $\geq$ 300 & Disminuir iluminación & Automático \\
-\hline
-Botón Manual & Cambiar modo & Manual \\
-\hline
-\end{tabular}
-\caption{Condiciones de operación del sistema}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+            Condición & Acción & Modo \\
+        \hline
+            Temp $>$ 28°C & Activar ventilación & Automático \\
+        \hline
+            Temp $\leq$ 28°C & Desactivar ventilación & Automático \\
+        \hline
+            Luz baja $<$ 300 & Aumentar iluminación & Automático \\
+        \hline
+            Luz alta $\geq$ 300 & Disminuir iluminación & Automático \\
+        \hline
+            Botón Manual & Cambiar modo & Manual \\
+        \hline
+    \end{tabular}
+    \caption{Condiciones de operación del sistema}
 \end{table}
 
+\section{Simulación del sistema}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{simulacion.jpeg}
+    \caption{Simulación del sistema en TinkerCAD}
+\end{figure}
+
+En la simulación se validó el funcionamiento general del sistema, adaptando algunos componentes 
+debido a las limitaciones del entorno virtual.
+
+\section{Montaje Físico}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{fisico.jpeg}
+    \caption{Montaje físico del sistema}
+\end{figure}
+
+El montaje físico permitió comprobar el comportamiento real del sistema, asegurando la correcta 
+integración entre sensores, actuadores y visualización.
+
 \section{Desarrollo}
+
 \subsection{Lectura de sensores}
 El sensor DS18B20 se utilizó para medir la temperatura con buena precisión. Este sensor trabaja
 de forma digital, lo que facilita su lectura. Por otro lado la LDR entrega valores analógicos
 que dependen de la cantidad de luz recibida.
+
 \subsection{Visualización en el LCD}
 Se utilizó una pantalla LCD con comunicación I2C para mostrar:
 \begin{itemize}
@@ -112,13 +141,30 @@ Esto permite al usuario entender fácilmente el estado del sistema.
 
 \section{Decisiones técnicas}
 \begin{itemize}
-    \item Se usó una resistencia de 220 ohmios para el led, así aprovechamos todo su brillo sin quemarlo.
-    \item Se usó una resistencia de 4.7 kOhms para el sensor ya que esta evita lecturas incorrectas del 
-sensor hacia el Arduino.
-    \item Usamos millis() y evitamos el uso de delay() para el antirrebote y que el sistema pudiera
-seguir trabajando en los sensores y que no se detuviera mientras verifica las pulsaciones.
-    \item Los botones se configuraron como INPUT\_PULLUP para evitar el uso de resistencias externas en el montaje.
-    \item Usamos un LCD I2C para aprovechar una conexión con menos cables y así tener más espacio para otros componentes.
+\item En el simulador TinkerCAD se utilizó el sensor TMP36 en lugar del DS18B20, debido a la 
+falta de soporte para las librerías OneWire y DallasTemperature. Esto implicó el uso de un pin 
+analógico, ya que el TMP36 trabaja con señales analógicas en lugar de comunicación digital.
+\item Para el control del motor DC se empleó un transistor junto con un diodo de protección. 
+Esto evita que el Arduino maneje directamente la corriente del motor, reduciendo el riesgo de daño 
+en la placa y protegiendo contra picos de voltaje.
+\item Se evitó el uso de la función lcd.clear(), ya que genera parpadeos en la pantalla. 
+En su lugar, se implementó la sobreescritura de caracteres, mejorando la experiencia del usuario.
+\item Se utilizó millis() en lugar de delay() para lograr una ejecución no bloqueante, permitiendo 
+la lectura continua de sensores y una mejor respuesta del sistema.
+\item Los botones fueron configurados como INPUT\_PULLUP para simplificar el circuito y eliminar 
+la necesidad de resistencias externas.
+\item Se implementó una validación lógica en el control del motor, evitando que el usuario pueda 
+modificar su estado en modo automático, garantizando coherencia en el funcionamiento del sistema.
+\item Se empleó una resistencia de 220 ohmios para proteger el LED y una resistencia de 4.7k ohmios 
+para asegurar lecturas estables en el sensor.
+\item Se seleccionó una pantalla LCD con interfaz I2C para reducir la cantidad de conexiones y 
+optimizar el espacio en el montaje.
 \end{itemize}
+
+\section{Conclusión}
+El desarrollo de este proyecto permitió integrar diferentes conceptos de electrónica y programación, 
+logrando un sistema funcional capaz de mejorar las condiciones de un entorno de estudio. 
+Además, se evidenció la importancia de la toma de decisiones técnicas para garantizar la estabilidad, 
+seguridad y eficiencia del sistema.
 
 \end{document}
