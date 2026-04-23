@@ -268,7 +268,7 @@ y 680 $\Omega$ para las ramas del circuito, y se alimentó con una bateria de 9V
 
 \paragraph{Simulación del circuito 2.2:}
 El circuito fue simulado utilizando el software \textit{Qucs-S}, obteniendo los resultados que se 
-muestran en la %Fig.~\ref{fig:sim2_2}.
+muestran en la Fig.~\ref{fig:sim2_2}.
 
 \begin{figure}[H]
   \centering
@@ -310,6 +310,24 @@ Se realizan los cálculos, el montaje y la simulación del circuito,
 debido a limitaciones para poder conseguir una resistencia de $180
 \Omega$ como indica el ejercicio, cambiamos dicha resistencia por una
 de $150 \Omega$
+
+\subsubsection{Simulación}
+
+Se realizaron dos simulaciones en simuladores diferentes, una en SimulIDE para los voltajes 
+y otra en Qucs-S para las corrientes, esto se debe ya que estos simuladores tienen enfoques 
+distintos y se desempeñan mejor en las mediciones que usamos.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.48\columnwidth]{simulacion3-1}
+  \caption{Simulación de corrientes del circuito 3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.48\columnwidth]{simulacion3-2}
+  \caption{Simulación de voltajes del circuito 3}
+\end{figure}
 
 \begin{figure}[H]
   \centering
@@ -581,7 +599,61 @@ Realizamos a su vez, el cálculo de las potencias:
   0.143876 Watts = 143.876 mW = P_{R_{330}}
 \end{align*}
 
-\section{Decisiones técnicas}
-Se registraron las decisiones técnicas tomadas durante el desarrollo del taller.
+\subsubsection{Montaje físico}
+Se realizó el montaje físico del circuito utilizando una protoboard y resistencias de los valores 
+indicados, alimentando el sistema con una fuente de 9V.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\columnwidth]{montaje3}
+\caption{Montaje físico del circuito para la ley de Kirchhoff}
+\end{figure}
+
+\subsubsection{Mediciones}
+Debido a limitaciones como que la pila no tenía su voltaje en 9V sino en apenas 8.5V, y otros 
+factores como la tolerancia de las resistencias y las caídas de voltaje durante su paso en las 
+conexiones cableadas y la protoboard, las tomas no fueron del todo precisas y solo se acercaban.
+
+A continuación se presentan las capturas de las mediciones de voltaje y corriente para cada una de 
+las resistencias del circuito:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\columnwidth]{medicion3_V_R150}
+  \includegraphics[width=0.45\columnwidth]{medicion3_I_R150}
+  \caption{Mediciones de voltaje y corriente en R150}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\columnwidth]{medicion3_V_R100}
+  \includegraphics[width=0.45\columnwidth]{medicion3_I_R100}
+  \caption{Mediciones de voltaje y corriente en R100}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\columnwidth]{medicion3_V_R220}
+  \includegraphics[width=0.45\columnwidth]{medicion3_I_R220}
+  \caption{Mediciones de voltaje y corriente en R220}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\columnwidth]{medicion3_V_R470}
+  \includegraphics[width=0.45\columnwidth]{medicion3_I_R470}
+  \caption{Mediciones de voltaje y corriente en R470}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\columnwidth]{medicion3_V_R330}
+  \includegraphics[width=0.45\columnwidth]{medicion3_I_R330}
+  \caption{Mediciones de voltaje y corriente en R330}
+\end{figure}
+
+\section{Tabla comparativa}
+En el desarrollo de los ejercicios se notaron diferencias que han sido registradas en la 
+siguiente tabla:
 
 \end{document}
