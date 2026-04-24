@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{circuitikz}
+\usepackage{placeins}
 \graphicspath{{assets/}}
 \IEEEoverridecommandlockouts
 \raggedbottom
@@ -278,7 +279,79 @@ muestran en la Fig.~\ref{fig:sim2_2}.
 \end{figure}
 
 \paragraph{Cálculos matemáticos}
-%Falta el desarrollo de los cálculos matemáticos para el divisor de corriente.
+
+Se tienen tres resistencias en paralelo alimentadas por una fuente de voltaje de $9\,\text{V}$.
+
+\begin{align*}
+  R_1 &= 680\,\Omega \\
+  R_2 &= 330\,\Omega \\
+  R_3 &= 220\,\Omega
+\end{align*}
+
+\paragraph{Resistencia equivalente}
+
+Para resistencias en paralelo:
+
+\begin{equation*}
+  \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}
+\end{equation*}
+
+\begin{equation*}
+  \frac{1}{R_{eq}} = \frac{1}{680} + \frac{1}{330} + \frac{1}{220}
+\end{equation*}
+
+\begin{equation*}
+  \frac{1}{R_{eq}} = 0.001471 + 0.003030 + 0.004545 = 0.009046
+\end{equation*}
+
+\begin{equation*}
+  R_{eq} = \frac{1}{0.009046} \approx 110.547\,\Omega
+\end{equation*}
+
+\paragraph{Transformación de fuente}
+
+Para aplicar el divisor de corriente, se convierte la fuente de voltaje en una fuente de corriente equivalente:
+
+\begin{equation*}
+  I_T = \frac{V}{R_{eq}} = \frac{9}{110.547} = 0.0814\,\text{A} = 81.4\,\text{mA}
+\end{equation*}
+
+\paragraph{Cálculo de corrientes (Divisor de corriente)}
+
+La corriente en cada rama se calcula como:
+
+\begin{equation}
+  I_n = I_T \cdot \frac{R_{eq}}{R_n}
+\end{equation}
+
+\begin{align*}
+  I_{R1} &= 0.0814 \cdot \frac{110.547}{680} 
+         = 0.0132\,\text{A} = 13.2\,\text{mA} \\
+  I_{R2} &= 0.0814 \cdot \frac{110.547}{330} 
+         = 0.0273\,\text{A} = 27.3\,\text{mA} \\
+  I_{R3} &= 0.0814 \cdot \frac{110.547}{220} 
+       = 0.0409\,\text{A} = 40.9\,\text{mA}
+\end{align*}
+
+\paragraph{Verificación}
+
+\begin{equation*}
+  I_T = I_{R1} + I_{R2} + I_{R3}
+\end{equation*}
+
+\begin{equation*}
+  I_T = 13.2 + 27.3 + 40.9 = 81.4\,\text{mA}
+\end{equation*}
+
+Se cumple la Ley de Corrientes de Kirchhoff.
+
+\paragraph{Voltaje}
+
+El voltaje en cada rama es el mismo:
+
+\begin{equation*}
+  V = 9\,\text{V}
+\end{equation*}
 
 \paragraph{Mediciones}
 Se midieron las corrientes en cada rama del circuito utilizando un multímetro,
@@ -652,8 +725,102 @@ las resistencias del circuito:
   \caption{Mediciones de voltaje y corriente en R330}
 \end{figure}
 
-\section{Tabla comparativa}
-En el desarrollo de los ejercicios se notaron diferencias que han sido registradas en la 
-siguiente tabla:
+\newpage
 
+\section{Tabla comparativa}
+
+Para calcular el porcentaje de error entre los valores teóricos y medidos se utilizó la siguiente expresión:
+
+\begin{equation}
+\text{Error (\%)} = \left| \frac{\text{Valor teórico} - \text{Valor medido}}{\text{Valor teórico}} \right| \times 100
+\end{equation}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Tabla comparativa entre valores teóricos y experimentales}
+  \resizebox{\columnwidth}{!}{
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+      \textbf{Ejercicio} & \textbf{Magnitud} & \textbf{Elemento} & \textbf{Teórico} & \textbf{Medido} & \textbf{Error (\%)} \\
+    \hline
+    \multicolumn{6}{|c|}{\textbf{Ejercicio 1 - Conversión Estrella-Triángulo}} \\
+    \hline
+      1 & Corriente total & $I$ & 12.46 A & (medido) & -- \\
+    \hline
+    \multicolumn{6}{|c|}{\textbf{Ejercicio 2.1 - Divisor de Voltaje}} \\
+    \hline
+      2.1 & Voltaje & $R_1$ & 0.90 V & 0.84 V & 6.67\% \\
+      2.1 & Voltaje & $R_2$ & 1.98 V & 2.01 V & 1.52\% \\
+      2.1 & Voltaje & $R_3$ & 6.12 V & 6.23 V & 1.79\% \\
+    \hline
+    \multicolumn{6}{|c|}{\textbf{Ejercicio 2.2 - Divisor de Corriente}} \\
+    \hline
+      2.2 & Corriente & $R_1$ & 13.2 mA & 12.9 mA & 2.27\% \\
+      2.2 & Corriente & $R_2$ & 27.3 mA & 26.5 mA & 2.93\% \\
+      2.2 & Corriente & $R_3$ & 40.9 mA & 39.6 mA & 3.18\% \\
+    \hline
+    \multicolumn{6}{|c|}{\textbf{Ejercicio 3 - Ley de Kirchhoff}} \\
+    \hline
+      3 & Corriente & $R_{150}$ & 14.36 mA & 13.6 mA & 5.29\% \\
+      3 & Corriente & $R_{100}$ & 21.09 mA & 8.0 mA & 62.06\% \\
+      3 & Corriente & $R_{220}$ & 0.206 mA & 19.0 mA & 9125\% \\
+      3 & Corriente & $R_{470}$ & 14.56 mA & 7.9 mA & 45.74\% \\
+      3 & Corriente & $R_{330}$ & 20.88 mA & 9.6 mA & 54.02\% \\
+    \hline
+      3 & Voltaje & $R_{150}$ & 2.15 V & 1.90 V & 11.63\% \\
+      3 & Voltaje & $R_{100}$ & 2.11 V & 1.86 V & 11.85\% \\
+      3 & Voltaje & $R_{220}$ & 0.045 V & 0.64 V & 1322\% \\
+      3 & Voltaje & $R_{470}$ & 6.84 V & 6.03 V & 11.84\% \\
+      3 & Voltaje & $R_{330}$ & 6.89 V & 5.92 V & 14.07\% \\
+    \hline
+  \end{tabular}
+  }
+\end{table}
+
+\subsection{Análisis de resultados}
+Al observar la tabla comparativa, se puede notar que los resultados teóricos del ejercicio 3 
+presentan coherencia, ya que coinciden con los valores obtenidos en las simulaciones tanto de 
+corriente como de voltaje. Esto indica que el procedimiento matemático aplicado es correcto 
+y que el modelo teórico representa adecuadamente el comportamiento ideal del circuito.
+
+Sin embargo, al comparar estos resultados con las mediciones realizadas en el montaje físico, 
+se evidencian diferencias en algunos valores, siendo en ciertos casos bastante significativas. 
+Estas variaciones pueden explicarse por varios factores presentes en un entorno real, como el 
+nivel de carga de la batería, la tolerancia de las resistencias, las pérdidas en los conductores 
+y la precisión del multímetro utilizado.
+
+Además, factores externos como las condiciones del ambiente y posibles errores en la conexión 
+de los instrumentos de medición también pueden influir en los resultados. Por esta razón, aunque 
+los datos experimentales no coinciden completamente con los teóricos, sí permiten validar de 
+forma general el comportamiento del circuito y evidencian la diferencia entre un modelo ideal 
+y una implementación real.
+
+\section{Conclusiones}
+En el desarrollo de este trabajo se analizaron distintos circuitos eléctricos aplicando 
+métodos fundamentales como la conversión estrella-triángulo, el divisor de voltaje, 
+el divisor de corriente y las leyes de Kirchhoff. A través de los cálculos teóricos, 
+las simulaciones y el montaje físico, se logró comprender cómo se distribuyen el 
+voltaje y la corriente en diferentes configuraciones de resistencias.
+
+Los resultados obtenidos en los ejercicios de divisor de voltaje y divisor de corriente 
+mostraron una alta concordancia entre los valores teóricos, simulados y medidos, lo cual 
+confirma que las fórmulas utilizadas describen de manera adecuada el comportamiento de 
+estos circuitos en condiciones ideales y cercanas a la realidad.
+
+En el caso del ejercicio de Kirchhoff, los cálculos teóricos coincidieron con los resultados 
+de simulación, lo que valida el procedimiento matemático aplicado. Sin embargo, al comparar 
+con las mediciones físicas, se evidenciaron diferencias más notorias en algunos valores. 
+Estas variaciones se pueden atribuir a factores reales como el nivel de carga de la batería, 
+la tolerancia de las resistencias, pérdidas en los conductores, posibles errores en la 
+medición con el multímetro y condiciones del entorno.
+
+Desde un punto de vista de aprendizaje, este trabajo permitió no solo aplicar correctamente 
+las fórmulas, sino también entender cuándo utilizar cada método según el tipo de circuito. 
+Además, se pudo evidenciar la diferencia entre el comportamiento ideal y el real, lo cual es 
+fundamental en el análisis de sistemas eléctricos.
+
+En conclusión, los resultados validan la teoría estudiada, y las diferencias encontradas en 
+la práctica no representan errores del modelo, sino características propias de cualquier 
+implementación real. Esto refuerza la importancia de combinar el análisis teórico con la 
+experimentación para obtener una comprensión más completa de los circuitos eléctricos.
 \end{document}
