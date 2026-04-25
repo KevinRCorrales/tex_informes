@@ -6,5 +6,8 @@
 *.fls
 *.fdb_latexmk
 .vscode/
+*.ngspice
+*.tex#
 *.out
 *.orig
+*.rej
