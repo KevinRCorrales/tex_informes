@@ -13,6 +13,12 @@ const byte PIN_LED_EXITO = A1;  // No hay mas pines :(
 byte rowPins[ROWS] = { 9, 8, 7, 6 };  // Pines a usar para las filas
 byte colPins[COLS] = { 5, 4, 3, 2 };  // Pines a usar para las columnas
 
+void setup() {
+}
+
+void loop() {
+}
+
 /*
 ============================================
 Funciones para debug en serial ok funciona para cuando algo se inicia correctamente
