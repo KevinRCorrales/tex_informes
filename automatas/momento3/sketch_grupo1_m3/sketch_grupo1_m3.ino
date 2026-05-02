@@ -3,6 +3,10 @@
 #include <IRremote.hpp>         // Librería necesaria para manejar el receptor infrarrojo y el control remoto
 #include <Keypad.h>             // Librería necesaria para el manejo del keypad 4x4
 
+// Definicion de ROWS y COLS = Tamaño del Keypad
+const byte ROWS = 4;
+const byte COLS = 4;
+
 // Variables de Estado y Pines a usar en el montaje
 const byte SERVO_PIN = 10;
 const byte PIN_RECEPTOR = 11;
