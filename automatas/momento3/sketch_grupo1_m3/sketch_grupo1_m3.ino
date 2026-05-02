@@ -3,6 +3,19 @@
 #include <IRremote.hpp>         // Librería necesaria para manejar el receptor infrarrojo y el control remoto
 #include <Keypad.h>             // Librería necesaria para el manejo del keypad 4x4
 
+// Estructura para crear usuarios con un id o nombre de usuario y una contraseña
+struct Usuario {
+  String id;
+  String passwd;
+};
+
+// Array que funciona como DataBase de usuarios
+Usuario users[3] = {
+  { "A198", "9*D2" },
+  { "B123", "83A#" },
+  { "C000", "AD23" }
+};
+
 // Definicion de ROWS y COLS = Tamaño del Keypad
 const byte ROWS = 4;
 const byte COLS = 4;
