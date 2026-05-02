@@ -14,14 +14,38 @@ const byte PIN_LED = 13;
 const byte BUZZER = 12;
 const byte PIN_LED_EXITO = A1;  // No hay mas pines :(
 
+// Creacion de el mapa de teclas
+char keys[ROWS][COLS] = {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+
 byte rowPins[ROWS] = { 9, 8, 7, 6 };  // Pines a usar para las filas
 byte colPins[COLS] = { 5, 4, 3, 2 };  // Pines a usar para las columnas
 
+// Crear objeto keypad
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+
+// Creacion de el LCD
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 void setup() {
+  Serial.begin(9600);
+
+  // Inicializador de el LCD
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Sistema listo");
 }
 
 void loop() {
 }
+
 
 /*
 ============================================
