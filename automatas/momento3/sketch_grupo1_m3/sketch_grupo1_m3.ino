@@ -45,6 +45,16 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 // Creacion de el LCD
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+// Función de validación
+bool validarUsuario(String user, String pass) {
+  for (int i = 0; i < 3; i++) {
+    if (users[i].id == user && users[i].passwd == pass) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void setup() {
   Serial.begin(9600);
 
@@ -53,12 +63,79 @@ void setup() {
   lcd.backlight();
 
   lcd.setCursor(0, 0);
-  lcd.print("Sistema listo");
+  lcd.print("ingrese usuario");
+
+  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_LED_EXITO, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
 }
+
+String usuario = "";
+String password = "";
+bool ingresandoPassword = false;
 
 void loop() {
-}
 
+  char tecla = keypad.getKey();
+
+  if (tecla) {
+
+    // Ingreso de Usuario
+    if (!ingresandoPassword) {
+
+      usuario += tecla;
+
+      lcd.setCursor(0, 1);
+      lcd.print(usuario);
+
+      // Cuando el usuario tenga 4 caracteres
+      if (usuario.length() == 4) {
+        ingresandoPassword = true;
+        lcd.clear();
+        lcd.print("Ingrese clave");
+      }
+    }
+
+    // Ingreso de contraseña
+    else {
+
+      password += tecla;
+
+      lcd.setCursor(password.length() - 1, 1);
+      lcd.print("*");
+
+      // Cuando la contraseña tenga 4 caracteres
+      if (password.length() == 4) {
+
+        lcd.clear();
+        lcd.print("Validando...");
+
+        if (validarUsuario(usuario, password)) {
+
+          lcd.setCursor(0, 1);
+          lcd.print("Acceso OK");
+          ok(F("Acceso concedido"));
+
+        } else {
+
+          lcd.setCursor(0, 1);
+          lcd.print("Error");
+          fail(F("Acceso denegado"));
+        }
+        
+        delay(2000);
+
+        // Reseteo del Sistema
+        usuario = "";
+        password = "";
+        ingresandoPassword = false;
+
+        lcd.clear();
+        lcd.print("Ingrese usuario");
+      }
+    }
+  }
+}
 
 /*
 ============================================
