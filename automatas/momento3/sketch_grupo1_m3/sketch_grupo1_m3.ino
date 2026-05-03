@@ -41,6 +41,8 @@ String usuario = "";
 String password = "";
 bool ingresandoPassword = false;
 bool candadoCerrado = true;
+bool usuarioExiste = false;
+bool limpiarResiduo = false;
 // Tiempos para medir con millis
 unsigned long tAlerta = 0;
 unsigned long tExito = 0;
@@ -48,6 +50,9 @@ unsigned long tBloqueo = 0;
 unsigned long tMotor = 0;
 // Contador de intentos fallidos
 int fallidos = 0;
+// Limites del servomotor para no llevarlo al límite de su torque
+const int A_MAX = 170;
+const int A_MIN = 10;
 
 // Creacion de el mapa de teclas
 char keys[ROWS][COLS] = {
@@ -63,6 +68,7 @@ byte colPins[COLS] = { 5, 4, 3, 2 };  // Pines a usar para las columnas
 // Crear objeto keypad
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
+Servo motor;
 
 // Creacion de el LCD
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -71,6 +77,15 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 bool validarUsuario(String user, String pass) {
   for (int i = 0; i < 3; i++) {
     if (users[i].id == user && users[i].passwd == pass) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool verificarExistencia(String user) {
+  for (int i = 0; i < 3; i++) {
+    if (users[i].id == user) {
       return true;
     }
   }
@@ -89,33 +104,46 @@ void setup() {
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_LED_EXITO, OUTPUT);
   pinMode(BUZZER, OUTPUT);
+
+  motor.attach(SERVO_PIN);
+  motor.write(A_MAX);  // Posicionar el candado inicialmente como cerrado
 }
 
 void loop() {
-
   char tecla = keypad.getKey();
 
-  if (tecla) {
+  if (tecla && estado != BLOQUEO) {
+    estado = INGRESO;
 
     // Ingreso de Usuario
     if (!ingresandoPassword) {
 
       usuario += tecla;
 
-      lcd.setCursor(0, 1);
-      lcd.print(usuario);
-
       // Cuando el usuario tenga 4 caracteres
       if (usuario.length() == 4) {
-        ingresandoPassword = true;
-        lcd.clear();
-        lcd.print("Ingrese clave");
+        if (verificarExistencia(usuario)) {
+          ingresandoPassword = true;
+          lcd.setCursor(0, 0);
+          lcd.print("Ingrese clave  "); // Espacios extra para sobreescribir el mensaje anterior
+        } else {
+          lcd.setCursor(0, 1);
+          lcd.print("Error");
+          digitalWrite(PIN_LED, HIGH);
+          digitalWrite(BUZZER, HIGH);
+          tAlerta = millis();
+          fail(F("El usuario ingresado no existe"));
+          usuario = "";
+        }
+        limpiarResiduo = true; // Limpiar el residuo
+      } else {
+        lcd.setCursor(0, 1);
+        lcd.print(usuario);
       }
     }
 
     // Ingreso de contraseña
     else {
-
       password += tecla;
 
       lcd.setCursor(password.length() - 1, 1);
@@ -123,34 +151,41 @@ void loop() {
 
       // Cuando la contraseña tenga 4 caracteres
       if (password.length() == 4) {
-        lcd.print("Validando...");
-
         if (validarUsuario(usuario, password)) {
-
           lcd.setCursor(0, 1);
           lcd.print("Acceso OK");
           ok(F("Acceso concedido"));
-
+          estado = PERMITIDO;
+          motor.write(A_MIN);
+          digitalWrite(PIN_LED_EXITO, HIGH);
+          tMotor = millis();
+          tExito = millis();
         } else {
-
           lcd.setCursor(0, 1);
-          lcd.print("Error");
+          lcd.print("Error    ");
           fail(F("Acceso denegado"));
+          digitalWrite(PIN_LED, HIGH);
+          digitalWrite(BUZZER, HIGH);
+          tAlerta = millis(); // Iniciar conteo de la alerta
           fallidos++;
+          limpiarResiduo = true;
         }
 
         if (fallidos == 3) {
           estado = BLOQUEO; // Cambiar estado
           tBloqueo = millis(); // Empezar conteo del bloqueo
           fallidos = 0; // Reseteo para el próximo login
+          ingresandoPassword = false;
+          lcd.setCursor(0, 0);
+          lcd.print("Bloqueo: Use IR");
+          lcd.setCursor(0, 1);
+          lcd.print("o espere 15 sg");
+          limpiarResiduo = false; // Asegurar que parte de nuestro mensaje no sea eliminado
         }
 
         // Reseteo del Sistema
         usuario = "";
         password = "";
-        ingresandoPassword = false;
-
-        lcd_login();
       }
     }
   }
@@ -169,9 +204,14 @@ void verificacion() {
   alarma o se giró el motor, se usa millis en vez de delay para que Arduino
   pueda seguir trabajando en otras tareas y no se bloquee
   */
-  if ((millis() - tAlerta >= 1000)) {
+  if (((estado == INGRESO) || (estado == BLOQUEO)) && (millis() - tAlerta >= 1000)) {
     digitalWrite(PIN_LED, LOW);
     digitalWrite(BUZZER, LOW);
+    if (limpiarResiduo) {
+      lcd.setCursor(0, 1);
+      lcd.print("     ");
+      limpiarResiduo = false;
+    }
   }
 
   if (!candadoCerrado && (millis() - tMotor) >= 10000) {
@@ -180,13 +220,19 @@ void verificacion() {
     Serial.println(F("Candado cerrado por seguridad trás 10 segundos"));
   }
 
-  if (estado == BLOQUEADO && millis() - tBloqueo >= 15000) {
-    estado = INICIAL;
+  if (estado == BLOQUEO && millis() - tBloqueo >= 15000) {
+    estado = REPOSO;
     lcd_login();
+    lcd.setCursor(0, 1);
+    lcd.print("              ");
   }
 
-  if (millis() - tExito >= 1000) {
+  if (estado == PERMITIDO && millis() - tExito >= 1000) {
     digitalWrite(PIN_LED_EXITO, LOW);
+    lcd_login();
+    estado = REPOSO;
+    lcd.setCursor(0, 1);
+    lcd.print("         ");
   }
 }
 
