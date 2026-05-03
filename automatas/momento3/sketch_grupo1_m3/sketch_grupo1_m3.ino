@@ -3,6 +3,17 @@
 #include <IRremote.hpp>         // Librería necesaria para manejar el receptor infrarrojo y el control remoto
 #include <Keypad.h>             // Librería necesaria para el manejo del keypad 4x4
 
+// Estados del sistema en enum
+enum EstadoSistema {
+  REPOSO,
+  INGRESO,
+  PERMITIDO,
+  DENEGADO,
+  BLOQUEO
+};
+
+EstadoSistema estado = REPOSO;
+
 // Estructura para crear usuarios con un id o nombre de usuario y una contraseña
 struct Usuario {
   String id;
@@ -26,6 +37,17 @@ const byte PIN_RECEPTOR = 11;
 const byte PIN_LED = 13;
 const byte BUZZER = 12;
 const byte PIN_LED_EXITO = A1;  // No hay mas pines :(
+String usuario = "";
+String password = "";
+bool ingresandoPassword = false;
+bool candadoCerrado = true;
+// Tiempos para medir con millis
+unsigned long tAlerta = 0;
+unsigned long tExito = 0;
+unsigned long tBloqueo = 0;
+unsigned long tMotor = 0;
+// Contador de intentos fallidos
+int fallidos = 0;
 
 // Creacion de el mapa de teclas
 char keys[ROWS][COLS] = {
@@ -62,17 +84,12 @@ void setup() {
   lcd.init();
   lcd.backlight();
 
-  lcd.setCursor(0, 0);
-  lcd.print("ingrese usuario");
+  lcd_login();
 
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_LED_EXITO, OUTPUT);
   pinMode(BUZZER, OUTPUT);
 }
-
-String usuario = "";
-String password = "";
-bool ingresandoPassword = false;
 
 void loop() {
 
@@ -106,8 +123,6 @@ void loop() {
 
       // Cuando la contraseña tenga 4 caracteres
       if (password.length() == 4) {
-
-        lcd.clear();
         lcd.print("Validando...");
 
         if (validarUsuario(usuario, password)) {
@@ -121,19 +136,57 @@ void loop() {
           lcd.setCursor(0, 1);
           lcd.print("Error");
           fail(F("Acceso denegado"));
+          fallidos++;
         }
-        
-        delay(2000);
+
+        if (fallidos == 3) {
+          estado = BLOQUEO; // Cambiar estado
+          tBloqueo = millis(); // Empezar conteo del bloqueo
+          fallidos = 0; // Reseteo para el próximo login
+        }
 
         // Reseteo del Sistema
         usuario = "";
         password = "";
         ingresandoPassword = false;
 
-        lcd.clear();
-        lcd.print("Ingrese usuario");
+        lcd_login();
       }
     }
+  }
+
+  verificacion();
+}
+
+void lcd_login() {
+  lcd.setCursor(0, 0);
+  lcd.print("Ingrese usuario");
+}
+
+void verificacion() {
+  /*
+  Función que verifica el tiempo transcurrido desde que se encendió la
+  alarma o se giró el motor, se usa millis en vez de delay para que Arduino
+  pueda seguir trabajando en otras tareas y no se bloquee
+  */
+  if ((millis() - tAlerta >= 1000)) {
+    digitalWrite(PIN_LED, LOW);
+    digitalWrite(BUZZER, LOW);
+  }
+
+  if (!candadoCerrado && (millis() - tMotor) >= 10000) {
+    motor.write(A_MAX);
+    candadoCerrado = true;
+    Serial.println(F("Candado cerrado por seguridad trás 10 segundos"));
+  }
+
+  if (estado == BLOQUEADO && millis() - tBloqueo >= 15000) {
+    estado = INICIAL;
+    lcd_login();
+  }
+
+  if (millis() - tExito >= 1000) {
+    digitalWrite(PIN_LED_EXITO, LOW);
   }
 }
 
