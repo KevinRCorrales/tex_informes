@@ -107,6 +107,7 @@ void setup() {
 
   motor.attach(SERVO_PIN);
   motor.write(A_MAX);  // Posicionar el candado inicialmente como cerrado
+  IrReceiver.begin(PIN_RECEPTOR, ENABLE_LED_FEEDBACK); // Inicializar el IRL
 }
 
 void loop() {
@@ -189,8 +190,44 @@ void loop() {
       }
     }
   }
+if (IrReceiver.decode()) {
 
-  verificacion();
+  uint32_t codigo = IrReceiver.decodedIRData.command;
+
+  Serial.print("IR: ");
+  Serial.println(codigo);
+
+  IrReceiver.resume();
+
+  // DEsbloqueo 
+  if (estado == BLOQUEO && codigo == 162) { // Boton Power en el control IRL 
+    estado = REPOSO;
+    lcd.clear();
+    lcd.print("Desbloqueado");
+    delay(1000);
+    lcd_login();
+  }
+   // Apertura Directa (ADMIN)
+  if (codigo == 162) { // Boton Power en el control IRL 
+
+    lcd.clear();
+    lcd.print("Admin acceso");
+
+    motor.write(A_MIN);
+    candadoCerrado = false;
+
+    digitalWrite(PIN_LED_EXITO, HIGH);
+
+    tMotor = millis();
+    tExito = millis();
+
+    estado = PERMITIDO;
+
+    Serial.println("Apertura por IR (admin)");
+  }
+}
+  
+verificacion();
 }
 
 void lcd_login() {
