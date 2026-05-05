@@ -190,6 +190,8 @@ void loop() {
       }
     }
   }
+
+// Lectura y decodificación de señal del control remoto IR
 if (IrReceiver.decode()) {
 
   uint32_t codigo = IrReceiver.decodedIRData.command;
@@ -200,7 +202,7 @@ if (IrReceiver.decode()) {
   IrReceiver.resume();
 
   // DEsbloqueo 
-  if (estado == BLOQUEO && codigo == 162) { // Boton Power en el control IRL 
+  if (estado == BLOQUEO && codigo == 162) { // Boton Power en el control IR 
     estado = REPOSO;
     lcd.clear();
     lcd.print("Desbloqueado");
@@ -208,7 +210,7 @@ if (IrReceiver.decode()) {
     lcd_login();
   }
    // Apertura Directa (ADMIN)
-  if (codigo == 162) { // Boton Power en el control IRL 
+  if (codigo == 162) { // Boton Power en el control IR 
 
     lcd.clear();
     lcd.print("Admin acceso");
