@@ -106,8 +106,8 @@ void setup() {
   pinMode(BUZZER, OUTPUT);
 
   motor.attach(SERVO_PIN);
-  motor.write(A_MAX);                                   // Posicionar el candado inicialmente como cerrado
-  IrReceiver.begin(PIN_RECEPTOR, ENABLE_LED_FEEDBACK);  // Inicializar el IRL
+  motor.write(A_MAX);                     // Posicionar el candado inicialmente como cerrado
+  IrReceiver.begin(PIN_RECEPTOR, false);  // Inicializar el IR y poner el LED_FEEDBACK en false para no activar el pin 13 que ya lo tenemos ocupado
 }
 
 void loop() {
@@ -126,10 +126,10 @@ void loop() {
         if (verificarExistencia(usuario)) {
           ingresandoPassword = true;
           lcd.setCursor(0, 0);
-          lcd.print("Ingrese clave  ");  // Espacios extra para sobreescribir el mensaje anterior
+          lcd.print(F("Ingrese clave  "));  // Espacios extra para sobreescribir el mensaje anterior
         } else {
           lcd.setCursor(0, 1);
-          lcd.print("Error");
+          lcd.print(F("Error"));
           digitalWrite(PIN_LED, HIGH);
           digitalWrite(BUZZER, HIGH);
           tAlerta = millis();
@@ -148,13 +148,13 @@ void loop() {
       password += tecla;
 
       lcd.setCursor(password.length() - 1, 1);
-      lcd.print("*");
+      lcd.print(F("*"));
 
       // Cuando la contraseña tenga 4 caracteres
       if (password.length() == 4) {
         if (validarUsuario(usuario, password)) {
           lcd.setCursor(0, 1);
-          lcd.print("Acceso OK");
+          lcd.print(F("Acceso OK"));
           ok(F("Acceso concedido"));
           estado = PERMITIDO;
           motor.write(A_MIN);
@@ -163,24 +163,25 @@ void loop() {
           tExito = millis();
         } else {
           lcd.setCursor(0, 1);
-          lcd.print("Error    ");
+          lcd.print(F("Error    "));
           fail(F("Acceso denegado"));
           digitalWrite(PIN_LED, HIGH);
           digitalWrite(BUZZER, HIGH);
           tAlerta = millis();  // Iniciar conteo de la alerta
           fallidos++;
           limpiarResiduo = true;
+          estado = DENEGADO;
         }
 
-        if (fallidos == 3) {
+        if (estado == DENEGADO && fallidos == 3) {
           estado = BLOQUEO;     // Cambiar estado
           tBloqueo = millis();  // Empezar conteo del bloqueo
           fallidos = 0;         // Reseteo para el próximo login
           ingresandoPassword = false;
           lcd.setCursor(0, 0);
-          lcd.print("Bloqueo: Use IR");
+          lcd.print(F("Bloqueo: Use IR"));
           lcd.setCursor(0, 1);
-          lcd.print("o espere 15 sg");
+          lcd.print(F("o espere 15 sg"));
           limpiarResiduo = false;  // Asegurar que parte de nuestro mensaje no sea eliminado
         }
 
@@ -196,25 +197,19 @@ void loop() {
 
     uint32_t codigo = IrReceiver.decodedIRData.command;
 
-    Serial.print("IR: ");
-    Serial.println(codigo);
+    if (codigo == 22) {
+      ok(F("Señal IR Recibida..."));
+      if (estado == BLOQUEO) {
+        lcd.setCursor(0, 0);
+        lcd.print(F("Desbloqueado    "));
+      } else {
+        lcd.setCursor(0, 0);
+        lcd.print(F("Admin acceso    "));
+      }
 
-    IrReceiver.resume();
-
-    // DEsbloqueo
-    if (estado == BLOQUEO && codigo == 162) {  // Boton Power en el control IR
-      estado = REPOSO;
-      lcd.clear();
-      lcd.print("Desbloqueado");
-      delay(1000);
-      lcd_login();
-    }
-    // Apertura Directa (ADMIN)
-    if (codigo == 162) {  // Boton Power en el control IR
-
-      lcd.clear();
-      lcd.print("Admin acceso");
-
+      lcd.setCursor(0, 1);
+      lcd.print(F("                "));
+      limpiarResiduo = true;
       motor.write(A_MIN);
       candadoCerrado = false;
 
@@ -225,8 +220,9 @@ void loop() {
 
       estado = PERMITIDO;
 
-      Serial.println("Apertura por IR (admin)");
+      ok(F("Apertura por IR (admin)"));
     }
+    IrReceiver.resume();
   }
 
   verificacion();
@@ -234,7 +230,7 @@ void loop() {
 
 void lcd_login() {
   lcd.setCursor(0, 0);
-  lcd.print("Ingrese usuario");
+  lcd.print(F("Ingrese usuario"));
 }
 
 void verificacion() {
@@ -248,7 +244,7 @@ void verificacion() {
     digitalWrite(BUZZER, LOW);
     if (limpiarResiduo) {
       lcd.setCursor(0, 1);
-      lcd.print("     ");
+      lcd.print(F("     "));
       limpiarResiduo = false;
     }
   }
@@ -263,7 +259,7 @@ void verificacion() {
     estado = REPOSO;
     lcd_login();
     lcd.setCursor(0, 1);
-    lcd.print("              ");
+    lcd.print(F("              "));
   }
 
   if (estado == PERMITIDO && millis() - tExito >= 1000) {
@@ -271,7 +267,7 @@ void verificacion() {
     lcd_login();
     estado = REPOSO;
     lcd.setCursor(0, 1);
-    lcd.print("         ");
+    lcd.print(F("         "));
   }
 }
 
