@@ -56,10 +56,10 @@ const int A_MIN = 10;
 
 // Creacion de el mapa de teclas
 char keys[ROWS][COLS] = {
-  {'1','2','3','A'},
-  {'4','5','6','B'},
-  {'7','8','9','C'},
-  {'*','0','#','D'}
+  { '1', '2', '3', 'A' },
+  { '4', '5', '6', 'B' },
+  { '7', '8', '9', 'C' },
+  { '*', '0', '#', 'D' }
 };
 
 byte rowPins[ROWS] = { 9, 8, 7, 6 };  // Pines a usar para las filas
@@ -106,8 +106,8 @@ void setup() {
   pinMode(BUZZER, OUTPUT);
 
   motor.attach(SERVO_PIN);
-  motor.write(A_MAX);  // Posicionar el candado inicialmente como cerrado
-  IrReceiver.begin(PIN_RECEPTOR, ENABLE_LED_FEEDBACK); // Inicializar el IRL
+  motor.write(A_MAX);                                   // Posicionar el candado inicialmente como cerrado
+  IrReceiver.begin(PIN_RECEPTOR, ENABLE_LED_FEEDBACK);  // Inicializar el IRL
 }
 
 void loop() {
@@ -126,7 +126,7 @@ void loop() {
         if (verificarExistencia(usuario)) {
           ingresandoPassword = true;
           lcd.setCursor(0, 0);
-          lcd.print("Ingrese clave  "); // Espacios extra para sobreescribir el mensaje anterior
+          lcd.print("Ingrese clave  ");  // Espacios extra para sobreescribir el mensaje anterior
         } else {
           lcd.setCursor(0, 1);
           lcd.print("Error");
@@ -136,7 +136,7 @@ void loop() {
           fail(F("El usuario ingresado no existe"));
           usuario = "";
         }
-        limpiarResiduo = true; // Limpiar el residuo
+        limpiarResiduo = true;  // Limpiar el residuo
       } else {
         lcd.setCursor(0, 1);
         lcd.print(usuario);
@@ -167,21 +167,21 @@ void loop() {
           fail(F("Acceso denegado"));
           digitalWrite(PIN_LED, HIGH);
           digitalWrite(BUZZER, HIGH);
-          tAlerta = millis(); // Iniciar conteo de la alerta
+          tAlerta = millis();  // Iniciar conteo de la alerta
           fallidos++;
           limpiarResiduo = true;
         }
 
         if (fallidos == 3) {
-          estado = BLOQUEO; // Cambiar estado
-          tBloqueo = millis(); // Empezar conteo del bloqueo
-          fallidos = 0; // Reseteo para el próximo login
+          estado = BLOQUEO;     // Cambiar estado
+          tBloqueo = millis();  // Empezar conteo del bloqueo
+          fallidos = 0;         // Reseteo para el próximo login
           ingresandoPassword = false;
           lcd.setCursor(0, 0);
           lcd.print("Bloqueo: Use IR");
           lcd.setCursor(0, 1);
           lcd.print("o espere 15 sg");
-          limpiarResiduo = false; // Asegurar que parte de nuestro mensaje no sea eliminado
+          limpiarResiduo = false;  // Asegurar que parte de nuestro mensaje no sea eliminado
         }
 
         // Reseteo del Sistema
@@ -191,45 +191,45 @@ void loop() {
     }
   }
 
-// Lectura y decodificación de señal del control remoto IR
-if (IrReceiver.decode()) {
+  // Lectura y decodificación de señal del control remoto IR
+  if (IrReceiver.decode()) {
 
-  uint32_t codigo = IrReceiver.decodedIRData.command;
+    uint32_t codigo = IrReceiver.decodedIRData.command;
 
-  Serial.print("IR: ");
-  Serial.println(codigo);
+    Serial.print("IR: ");
+    Serial.println(codigo);
 
-  IrReceiver.resume();
+    IrReceiver.resume();
 
-  // DEsbloqueo 
-  if (estado == BLOQUEO && codigo == 162) { // Boton Power en el control IR 
-    estado = REPOSO;
-    lcd.clear();
-    lcd.print("Desbloqueado");
-    delay(1000);
-    lcd_login();
+    // DEsbloqueo
+    if (estado == BLOQUEO && codigo == 162) {  // Boton Power en el control IR
+      estado = REPOSO;
+      lcd.clear();
+      lcd.print("Desbloqueado");
+      delay(1000);
+      lcd_login();
+    }
+    // Apertura Directa (ADMIN)
+    if (codigo == 162) {  // Boton Power en el control IR
+
+      lcd.clear();
+      lcd.print("Admin acceso");
+
+      motor.write(A_MIN);
+      candadoCerrado = false;
+
+      digitalWrite(PIN_LED_EXITO, HIGH);
+
+      tMotor = millis();
+      tExito = millis();
+
+      estado = PERMITIDO;
+
+      Serial.println("Apertura por IR (admin)");
+    }
   }
-   // Apertura Directa (ADMIN)
-  if (codigo == 162) { // Boton Power en el control IR 
 
-    lcd.clear();
-    lcd.print("Admin acceso");
-
-    motor.write(A_MIN);
-    candadoCerrado = false;
-
-    digitalWrite(PIN_LED_EXITO, HIGH);
-
-    tMotor = millis();
-    tExito = millis();
-
-    estado = PERMITIDO;
-
-    Serial.println("Apertura por IR (admin)");
-  }
-}
-  
-verificacion();
+  verificacion();
 }
 
 void lcd_login() {
