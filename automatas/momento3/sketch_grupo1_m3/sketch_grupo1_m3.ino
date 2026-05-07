@@ -158,9 +158,11 @@ void loop() {
           ok(F("Acceso concedido"));
           estado = PERMITIDO;
           motor.write(A_MIN);
+          candadoCerrado = false;
           digitalWrite(PIN_LED_EXITO, HIGH);
           tMotor = millis();
           tExito = millis();
+          ingresandoPassword = false;
         } else {
           lcd.setCursor(0, 1);
           lcd.print(F("Error    "));
@@ -239,7 +241,7 @@ void verificacion() {
   alarma o se giró el motor, se usa millis en vez de delay para que Arduino
   pueda seguir trabajando en otras tareas y no se bloquee
   */
-  if (((estado == INGRESO) || (estado == BLOQUEO)) && (millis() - tAlerta >= 1000)) {
+  if ((millis() - tAlerta >= 1000)) {
     digitalWrite(PIN_LED, LOW);
     digitalWrite(BUZZER, LOW);
     if (limpiarResiduo) {
