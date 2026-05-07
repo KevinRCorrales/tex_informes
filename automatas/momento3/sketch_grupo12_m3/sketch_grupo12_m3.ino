@@ -199,8 +199,8 @@ void loop() {
 
     uint32_t codigo = IrReceiver.decodedIRData.command;
 
-    if (codigo == 22) {
-      ok(F("Señal IR Recibida..."));
+    if (codigo == 22 || codigo == 104) { // Admitir dos codigos para controles físicos (22) y controles simulados en Wokwi (104)
+      ok(F("Señar IR recibida."));
       if (estado == BLOQUEO) {
         lcd.setCursor(0, 0);
         lcd.print(F("Desbloqueado    "));

@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build/sketch_grupo12_m3.ino.hex'
+elf = 'build/sketch_grupo12_m3.ino.elf'
