@@ -131,7 +131,7 @@ void loop() {
           lcd.setCursor(0, 1);
           lcd.print(F("Error"));
           digitalWrite(PIN_LED, HIGH);
-          digitalWrite(BUZZER, HIGH);
+          tone(BUZZER, 1000); // Activar buzzer con frecuencia usando tone()
           tAlerta = millis();
           fail(F("El usuario ingresado no existe"));
           usuario = "";
@@ -168,7 +168,7 @@ void loop() {
           lcd.print(F("Error    "));
           fail(F("Acceso denegado"));
           digitalWrite(PIN_LED, HIGH);
-          digitalWrite(BUZZER, HIGH);
+          tone(BUZZER, 1000); // Activar buzzer con frecuencia usando tone()
           tAlerta = millis();  // Iniciar conteo de la alerta
           fallidos++;
           limpiarResiduo = true;
@@ -243,7 +243,7 @@ void verificacion() {
   */
   if ((millis() - tAlerta >= 1000)) {
     digitalWrite(PIN_LED, LOW);
-    digitalWrite(BUZZER, LOW);
+    noTone(BUZZER); // Apagar Buzzer
     if (limpiarResiduo) {
       lcd.setCursor(0, 1);
       lcd.print(F("     "));
