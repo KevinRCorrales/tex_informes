@@ -295,7 +295,7 @@ void verificacion() {
   alarma o se giró el motor, se usa millis en vez de delay para que Arduino
   pueda seguir trabajando en otras tareas y no se bloquee
   */
-  if ((estado == DENEGADO || estado == INGRESO) && (millis() - tAlerta >= 1000)) {
+  if ((estado == DENEGADO || estado == INGRESO || estado == BLOQUEO) && (millis() - tAlerta >= 1000)) {
     // Cambiamos si estamos en estado DENEGADO o de INGRESO para apagar la alerta
     digitalWrite(PIN_LED, LOW);
     digitalWrite(BUZZER, LOW);
