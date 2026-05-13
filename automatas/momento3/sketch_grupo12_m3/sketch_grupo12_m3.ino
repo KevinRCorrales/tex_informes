@@ -1,5 +1,5 @@
 /*
-  Grupo #1: Proyecto 2. Sistema de acceso seguro para laboratorio con clave, alarma y 
+  Grupo #12: Proyecto 2. Sistema de acceso seguro para laboratorio con clave, alarma y 
   apertura motorizada
 
   Este sistema combina conceptos de seguridad, interfaz y lógica de estados
