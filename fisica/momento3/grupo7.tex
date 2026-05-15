@@ -3,9 +3,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{circuitikz}
+\usepackage[siunitx, american]{circuitikz}
 \usepackage{placeins}
 \usepackage{array}
 
@@ -119,7 +120,91 @@ $v_{x2}$.
 \end{align*}
 
 \subsection{Calculos Matematicos}
-%Falta
+
+\subsubsection{Cálculos del Circuito}
+
+\paragraph{Ecuaciones Principales}
+\begin{align*}
+    I_2 - I_1 &= 2\text{ mA} \quad &\text{Ec1} \\
+    I_3 - I_4 &= 1.5\text{ mA} \quad &\text{Ec2}
+\end{align*}
+
+\paragraph{Supermalla 1 (Izquierda)}
+\begin{align*}
+    -18 + 2.2I_1 + 1I_1 + 1.8I_2 + 1.2I_2 + 1.5(I_2 - I_3) &= 0 \\
+    3.2I_1 + 4.5I_2 - 1.5I_3 &= 18 \quad \text{Ec3}
+\end{align*}
+
+\paragraph{Supermalla 2 (Derecha)}
+\begin{align*}
+    1.5I_4 + 12 + 2I_4 + 1.8I_3 + 1.5(I_3 - I_2) + 2.7I_3 &= 0 \\
+    3.5I_4 + 6I_3 - 1.5I_2 &= -12 \quad \text{Ec4}
+\end{align*}
+
+Sustituyendo las corrientes de las fuentes:
+\begin{align*}
+    I_2 &= 2 + I_1 \\
+    I_4 &= I_3 - 1.5
+\end{align*}
+
+Reemplazando en las ecuaciones de las supermallas:
+\begin{align*}
+    3.2I_1 + 4.5(2 + I_1) - 1.5I_3 &= 18 \\
+    3.5(I_3 - 1.5) + 6I_3 - 1.5(2 + I_1) &= -12 \\
+    \\
+    3.2I_1 + 9 + 4.5I_1 - 1.5I_3 &= 18 \\
+    3.5I_3 - 5.25 + 6I_3 - 3 - 1.5I_1 &= -12 \\
+    \\
+    7.7I_1 - 1.5I_3 &= 18 - 9 \\
+    9.5I_3 - 1.5I_1 &= -12 + 8.25
+\end{align*}
+
+\paragraph{Eliminación Multiplicando}
+Sistema resultante:
+\begin{align*}
+    7.7I_1 - 1.5I_3 &= 9 \quad &\times (9.5) \\
+    -1.5I_1 + 9.5I_3 &= -3.75 \quad &\times (1.5)
+\end{align*}
+
+Operando:
+\begin{align*}
+    73.15I_1 - 14.25I_3 &= 85.5 \\
+    -2.25I_1 + 14.25I_3 &= -5.625 \\
+    \hline
+    70.9I_1 &= 79.875
+\end{align*}
+
+Despejando las corrientes:
+\begin{align*}
+    I_1 &= \frac{79.875}{70.9} \implies \mathbf{I_1 = 1.126\text{ mA}} \\
+    \\
+    I_2 &= 2 + 1.126 \implies \mathbf{I_2 = 3.126\text{ mA}} \\
+    \\
+    7.7(1.126) - 1.5I_3 &= 9 \\
+    8.6702 - 9 &= 1.5I_3 \\
+    \frac{-0.3298}{1.5} &= I_3 \implies \mathbf{I_3 = -0.219\text{ mA}} \\
+    \\
+    I_4 &= -0.219 - 1.5 \implies \mathbf{I_4 = -1.719\text{ mA}}
+\end{align*}
+
+\paragraph{Voltajes}
+Cálculo de $V_{x1}$:
+\begin{align*}
+    -18 + 2.2I_1 + 1I_1 + V_{x1} &= 0 \\
+    V_{x1} &= 18 - 3.2I_1 \\
+    V_{x1} &= 18 - 3.2(1.126) \\
+    V_{x1} &= 18 - 3.6032 \\
+    \mathbf{V_{x1}} &\mathbf{= 14.3968\text{ V}}
+\end{align*}
+
+Cálculo de $V_{x2}$:
+\begin{align*}
+    12 + 1.5I_4 + 2I_4 - V_{x2} &= 0 \\
+    V_{x2} &= 12 + 3.5I_4 \\
+    V_{x2} &= 12 + 3.5(-1.719) \\
+    V_{x2} &= 12 - 6.0165 \\
+    \mathbf{V_{x2}} &\mathbf{= 5.9835\text{ V}}
+\end{align*}
 
 \subsection{Simulación}
 El circuito fue simulado utilizando el software \textit{SimulIDE}, obteniendo resultados que se 
@@ -135,24 +220,27 @@ compararán con los cálculos teóricos realizados mediante el método de superm
 
 \begin{table}[h]
 \centering
-\caption{Comparación entre resultados teóricos, simulados}
-\begin{tabular}{|c|c|c|c|c|c|}
+\caption{Comparación entre resultados teóricos y simulados (Ejercicio 1)}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Variable} & \textbf{Teórico} & \textbf{Simulado} & \textbf{Error \%} & \textbf{Observacion} \\
+\textbf{Variable} & \textbf{Teórico} & \textbf{Simulado} & \textbf{Error \%} & \textbf{Observación} \\
 \hline
-$I_1$ & & & & \\
+$I_1$ & $1.126 \text{ mA}$ & $1.127 \text{ mA}$ & $0.09\%$ & Correlación alta \\
 \hline
-$I_2$ & & & & \\
+$I_2$ & $3.126 \text{ mA}$ & $3.127 \text{ mA}$ & $0.03\%$ & Correlación alta \\
 \hline
-$I_3$ & & & & \\
+$I_3$ & $-0.219 \text{ mA}$ & $-0.2169 \text{ mA}$* & $0.96\%$ & Correlación alta \\
 \hline
-$I_4$ & & & & \\
+$I_4$ & $-1.719 \text{ mA}$ & $-1.717 \text{ mA}$ & $0.12\%$ & Correlación alta \\
 \hline
-$V_{x1}$ & & & & \\
+$V_{x1}$ & $14.3968 \text{ V}$ & $14.39 \text{ V}$ & $0.05\%$ & Correlación alta \\
 \hline
-$V_{x2}$ & & & & \\
+$V_{x2}$ & $5.9835 \text{ V}$ & $5.991 \text{ V}$ & $0.13\%$ & Correlación alta \\
 \hline
 \end{tabular}
+\begin{flushleft}
+\small *Valor convertido de $-216.9 \mu\text{A}$ obtenido en la simulación.
+\end{flushleft}
 \end{table}
 
 \section{Ejercicio 2: Método de análisis nodal}
