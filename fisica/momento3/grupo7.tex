@@ -212,7 +212,7 @@ compararán con los cálculos teóricos realizados mediante el método de superm
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.48\columnwidth]{simulacion_supermalla.png}
+\includegraphics[width=0.70\columnwidth]{simulacion_supermalla.png}
 \caption{Simulación del circuito mediante análisis por supermallas}
 \end{figure}
 
@@ -252,7 +252,7 @@ para determinar los voltajes $V_a$, $V_b$ y $V_c$ respecto a tierra.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.48\columnwidth]{nodal}
+\includegraphics[width=0.70\columnwidth]{nodal}
 \caption{Circuito propuesto para análisis nodal}
 \label{fig:nodal}
 \end{figure}
@@ -558,22 +558,22 @@ El circuito fue simulado utilizando el software \textit{SimulIDE}, obteniendo re
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.48\columnwidth]{simulacion2.png}
+\includegraphics[width=0.70\columnwidth]{simulacion2.png}
 \caption{Simulación del circuito mediante análisis nodal}
 \end{figure}
 
 \subsubsection{Resultados obtenidos en simulación}
 
 \begin{align*}
-V_a &= 0V \\
-V_b &= 0V \\
-V_c &= 0V \\
-I_{R1} &= 0mA \\
-I_{R2} &= 0mA \\
-I_{R3} &= 0mA \\
-I_{R4} &= 0mA \\
-I_{R5} &= 0mA \\
-I_{R6} &= 0mA
+V_a &= 5.312V \\
+V_b &= 1.958V \\
+V_c &= 0.4647V \\
+I_{R1} &= 11.18mA \\
+I_{R2} &= 7.812mA \\
+I_{R3} &= 3.364mA \\
+I_{R4} &= 2.375mA \\
+I_{R5} &= 0.9887mA \\
+I_{R6} &= 0.9887mA
 \end{align*}
 
 \subsection{Montaje físico}
@@ -620,21 +620,23 @@ Esta es la tabla de comparación entre los resultados teóricos, simulados y med
 \hline
 \textbf{Variable} & \textbf{Teórico} & \textbf{Simulado} & \textbf{Medido} & \textbf{Error sim. \%} & \textbf{Error med. \%} \\
 \hline
-$V_b$ & $1.95V$ & & & & \\
+$V_a$ & $5.31V$ & $5.312V$ & & & \\
 \hline
-$V_c$ & $0.47V$ & & & & \\
+$V_b$ & $1.95V$ & $1.958V$ & & & \\
 \hline
-$I_{R1}$ & $11.18mA$ & & & & \\
+$V_c$ & $0.47V$ & $0.4647V$ & & & \\
 \hline
-$I_{R2}$ & $7.81mA$ & & & & \\
+$I_{R1}$ & $11.18mA$ & $11.18mA$ & & & \\
 \hline
-$I_{R3}$ & $3.36mA$ & & & & \\
+$I_{R2}$ & $7.81mA$ & $7.812mA$ & & & \\
 \hline
-$I_{R4}$ & $2.38mA$ & & & & \\
+$I_{R3}$ & $3.36mA$ & $3.364mA$ & & & \\
 \hline
-$I_{R5}$ & $0.99mA$ & & & & \\
+$I_{R4}$ & $2.38mA$ & $2.375mA$ & & & \\
 \hline
-$I_{R6}$ & $1.00mA$ & & & & \\
+$I_{R5}$ & $0.99mA$ & $0.9887mA$ & & & \\
+\hline
+$I_{R6}$ & $1.00mA$ & $0.9887mA$ & & & \\
 \hline
 \end{tabular}
 \end{table}
